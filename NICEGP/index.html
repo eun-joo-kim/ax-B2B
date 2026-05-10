@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio · 나이스그룹 AI 내재화 워크숍 — B2B 교육 컨설팅 PM</title>
+  <meta name="description" content="13개 계열사 임직원 대상 Two-Track AI 내재화 워크숍 — 기획·운영 PM 사례." />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+
+  <style>
+    :root {
+      --base: #F8F5FA;
+      --panel: #FFFFFF;
+      --ink: #1A1238;
+      --muted: #6E6979;
+      --accent: #6366F1;
+      --accent-deep: #4338CA;
+      --soft: #E0E7FF;
+      --soft-strong: #C7D2FE;
+      --line: rgba(26, 18, 56, 0.1);
+      --line-strong: rgba(26, 18, 56, 0.18);
+      --shadow-card: 0 22px 70px -46px rgba(67, 56, 202, 0.4);
+      --shadow-amber: 0 24px 80px -34px rgba(99, 102, 241, 0.42);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--base); }
+    body {
+      font-family: 'Pretendard', 'Geist', system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(99, 102, 241, 0.14), transparent 24rem),
+        radial-gradient(circle at 92% 12%, rgba(167, 139, 250, 0.12), transparent 22rem),
+        linear-gradient(135deg, rgba(26, 18, 56, 0.04) 0 1px, transparent 1px 42px),
+        var(--base);
+      color: var(--ink);
+      word-break: keep-all;
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    .smooth { transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    .reveal { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+    .reveal.is-visible {
+      animation: fadeInUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--index, 0) * 80ms);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes floatPanel {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 768px) { .container { padding: 0 32px; } }
+
+    /* Glass pill nav */
+    .nav-shell {
+      position: fixed;
+      inset-inline: 0;
+      top: 16px;
+      z-index: 40;
+      padding: 0 16px;
+    }
+    .glass-nav {
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: color-mix(in srgb, var(--panel) 82%, transparent);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px -34px rgba(67, 56, 202, 0.35), inset 0 1px 0 rgba(255,255,255,0.9);
+      max-width: 1180px;
+      margin: 0 auto;
+      border-radius: 999px;
+      padding: 10px 14px 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .nav-logo .dot {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+    }
+    .nav-links { display: flex; gap: 26px; font-size: 13px; font-weight: 500; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-mobile-btn {
+      display: flex; width: 38px; height: 38px;
+      align-items: center; justify-content: center;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      color: var(--ink); cursor: pointer; border: none;
+    }
+    @media (min-width: 880px) { .nav-mobile-btn { display: none; } }
+    @media (max-width: 879px) { .nav-links { display: none; } .nav-logo { font-size: 12px; } }
+
+    .mobile-panel {
+      transform: translateY(-12px); opacity: 0; pointer-events: none;
+      max-width: 1180px; margin: 8px auto 0;
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--panel) 96%, transparent);
+      border: 1px solid var(--line); padding: 16px;
+      box-shadow: var(--shadow-amber);
+    }
+    .mobile-panel.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .mobile-panel a {
+      display: block; padding: 12px 16px;
+      border-radius: 14px; font-size: 14px; font-weight: 600; color: var(--ink);
+    }
+    .mobile-panel a:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+    @media (min-width: 880px) { .mobile-panel { display: none; } }
+
+    /* Bezel system */
+    .bezel {
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      border: 1px solid var(--line);
+      padding: 6px;
+      border-radius: 28px;
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.92);
+    }
+    .bezel-core {
+      border-radius: 22px;
+      background: linear-gradient(145deg, var(--panel), color-mix(in srgb, var(--panel) 88%, var(--soft)));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.9);
+    }
+    .bezel-dark { background: var(--ink); border: 1px solid rgba(255,255,255,0.08); padding: 6px; border-radius: 28px; }
+    .bezel-dark > .bezel-core { background: var(--ink); color: var(--panel); }
+
+    /* Eyebrow chip */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--accent); padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+    .eyebrow.on-dark {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.16);
+      color: var(--soft);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 130px 0 72px;
+      min-height: calc(100vh - 80px);
+      display: flex; align-items: center;
+    }
+    @media (min-width: 768px) { .hero { padding: 160px 0 96px; } }
+    .hero-grid { display: grid; gap: 48px; grid-template-columns: 1fr; }
+    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1.05fr 0.95fr; align-items: center; } }
+    .hero h1 {
+      font-size: 40px; font-weight: 800; line-height: 1.18;
+      letter-spacing: -0.015em; color: var(--ink);
+      margin-top: 24px; margin-bottom: 24px;
+    }
+    @media (min-width: 640px) { .hero h1 { font-size: 52px; } }
+    @media (min-width: 1024px) { .hero h1 { font-size: 60px; } }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p.lead {
+      font-size: 16px; line-height: 1.8; color: var(--muted); max-width: 560px;
+    }
+    @media (min-width: 1024px) { .hero p.lead { font-size: 18px; } }
+    .hero p.lead strong { color: var(--ink); font-weight: 600; }
+    .hero-card { animation: floatPanel 7s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+    @media (max-width: 1023px) { .hero-card { animation: none; } }
+
+    .meta-card { padding: 28px; }
+    @media (min-width: 768px) { .meta-card { padding: 32px; } }
+    .meta-card .head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 22px; border-bottom: 1px solid var(--line);
+    }
+    .meta-card .head .meta {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    }
+    .meta-card .head h2 {
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      margin-top: 6px; letter-spacing: -0.01em;
+    }
+    .meta-card .head .ico {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      background: var(--accent); color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+    }
+    .meta-card .rows { display: grid; gap: 8px; padding: 22px 0 0; }
+    .meta-row {
+      display: grid; grid-template-columns: 96px 1fr;
+      gap: 14px; padding: 14px 16px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      align-items: baseline;
+    }
+    .meta-row dt {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    }
+    .meta-row dd { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.005em; }
+    .meta-row dd .accent { color: var(--accent); }
+
+    /* Section base */
+    .section { padding: 88px 0; }
+    @media (min-width: 768px) { .section { padding: 120px 0; } }
+    .section-head { max-width: 800px; margin-bottom: 48px; }
+    .section-head .eyebrow { margin-bottom: 24px; }
+    .section h2 {
+      font-size: 32px; font-weight: 800; letter-spacing: -0.012em;
+      color: var(--ink); line-height: 1.22;
+    }
+    @media (min-width: 768px) { .section h2 { font-size: 40px; } }
+    @media (min-width: 1024px) { .section h2 { font-size: 48px; } }
+    .section .lead-after {
+      max-width: 680px; margin-top: 20px;
+      font-size: 16px; line-height: 1.78; color: var(--muted);
+    }
+    @media (min-width: 1024px) { .section .lead-after { font-size: 18px; } }
+    .section .lead-after strong { color: var(--ink); font-weight: 600; }
+    .section h2 .accent { color: var(--accent); }
+
+    /* Context — 두 페인포인트 카드 */
+    .ctx-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .ctx-grid { grid-template-columns: 1fr 1fr; } }
+    .ctx-card { padding: 36px 32px; height: 100%; }
+    @media (min-width: 768px) { .ctx-card { padding: 44px 40px; } }
+    .ctx-card .ctx-tag {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      color: var(--accent); background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      display: inline-block; margin-bottom: 22px;
+    }
+    .ctx-card.dark .ctx-tag {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.18);
+      color: var(--soft);
+    }
+    .ctx-card h3 {
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.01em; line-height: 1.35; margin-bottom: 14px;
+    }
+    .ctx-card.dark h3 { color: var(--panel); }
+    .ctx-card p { font-size: 15px; color: var(--muted); line-height: 1.78; }
+    @media (min-width: 768px) { .ctx-card p { font-size: 16px; } }
+    .ctx-card.dark p { color: rgba(255,255,255,0.62); }
+
+    /* Solution */
+    .sol-goal {
+      margin-bottom: 24px;
+      padding: 32px 36px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, var(--ink), color-mix(in srgb, var(--ink) 86%, var(--accent)));
+      color: var(--panel);
+      display: grid; gap: 18px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .sol-goal { grid-template-columns: auto 1fr; align-items: center; gap: 28px; } }
+    .sol-goal .goal-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--soft);
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      align-self: start; justify-self: start;
+    }
+    .sol-goal p { font-size: 16px; line-height: 1.78; color: rgba(255,255,255,0.88); font-weight: 500; }
+    .sol-goal p strong { color: var(--panel); font-weight: 700; }
+
+    .track-grid { display: grid; gap: 16px; grid-template-columns: 1fr; margin-bottom: 24px; }
+    @media (min-width: 768px) { .track-grid { grid-template-columns: 1fr 1fr; } }
+    .track-card { padding: 36px 32px; height: 100%; }
+    @media (min-width: 768px) { .track-card { padding: 44px 40px; } }
+    .track-tag {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      color: var(--panel); background: var(--accent);
+      display: inline-block; margin-bottom: 18px;
+    }
+    .track-card h3 { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.3; }
+    .track-card .who { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 18px; }
+    .track-card p { font-size: 15px; color: var(--muted); line-height: 1.78; margin-bottom: 24px; }
+    .track-steps { display: flex; flex-direction: column; gap: 10px; }
+    .track-step {
+      display: grid; grid-template-columns: 28px 1fr;
+      gap: 14px; align-items: flex-start;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--ink) 3%, transparent);
+    }
+    .track-step .num {
+      font-family: 'Geist', sans-serif;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--accent); color: var(--panel);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .track-step .desc { font-size: 13px; color: var(--ink); line-height: 1.6; padding-top: 4px; }
+
+    .sol-results { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .sol-results { grid-template-columns: repeat(3, 1fr); } }
+    .sol-result-card { padding: 28px 26px; height: 100%; }
+    .sol-result-card .ico {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: var(--soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .sol-result-card h4 { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.4; margin-bottom: 8px; }
+    .sol-result-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* Artifacts */
+    .artifact-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .artifact-grid { grid-template-columns: repeat(3, 1fr); } }
+    .artifact-card { padding: 0; height: 100%; overflow: hidden; }
+    .artifact-card .artifact-core { padding: 0; overflow: hidden; }
+    .artifact-preview {
+      width: 100%; height: 200px; position: relative; overflow: hidden;
+      background: var(--soft);
+      border-bottom: 1px solid var(--line);
+    }
+    .artifact-preview iframe {
+      position: absolute; top: 0; left: 0;
+      width: 200%; height: 200%;
+      transform: scale(0.5); transform-origin: top left;
+      border: none; pointer-events: none;
+    }
+    .artifact-info { padding: 26px 28px 28px; }
+    .artifact-type {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .artifact-name { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+    .artifact-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .artifact-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 800; letter-spacing: 0.06em;
+      color: var(--accent);
+      padding: 8px 14px; border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .artifact-btn:hover { background: var(--soft-strong); }
+
+    /* Workbook intro aside */
+    .wb-intro {
+      display: grid; gap: 32px; grid-template-columns: 1fr;
+      margin-bottom: 48px; align-items: start;
+    }
+    @media (min-width: 1024px) { .wb-intro { grid-template-columns: 1.1fr 0.9fr; gap: 56px; } }
+    .wb-intro-text { font-size: 16px; line-height: 1.78; color: var(--muted); }
+    .wb-intro-text strong { color: var(--ink); font-weight: 700; }
+    .wb-aside { padding: 32px 28px; }
+    .wb-aside-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 20px;
+    }
+    .wb-step {
+      display: grid; grid-template-columns: 32px 1fr;
+      gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .wb-step:last-child { border-bottom: none; }
+    .wb-step .num {
+      font-family: 'Geist', sans-serif;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent); color: var(--panel);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wb-step h5 { font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 4px; letter-spacing: -0.005em; }
+    .wb-step p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* Result Report */
+    .rp-track-note {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent);
+      padding: 6px 14px; border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      margin-bottom: 20px;
+    }
+    .rp-track-sub { font-size: 13px; color: var(--muted); margin-top: 18px; font-style: italic; }
+
+    /* Part A — 5 직무군 */
+    .part-label {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent);
+      margin: 56px 0 16px;
+    }
+    .part-label::before {
+      content: ''; width: 36px; height: 1px; background: var(--accent);
+    }
+    .part-title {
+      font-size: 26px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.012em; margin-bottom: 32px;
+      line-height: 1.3;
+    }
+    @media (min-width: 768px) { .part-title { font-size: 32px; } }
+
+    .job-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .job-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .job-grid { grid-template-columns: repeat(3, 1fr); } }
+    .job-card { padding: 32px 28px; height: 100%; }
+    .job-card .job-head { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+    .job-card .job-ico {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 22px;
+    }
+    .job-card .job-name { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.3; }
+    .job-card .job-count {
+      font-family: 'Geist', sans-serif;
+      font-size: 11px; font-weight: 700;
+      color: var(--muted); letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+    .job-card .job-scope {
+      font-size: 12px; font-weight: 700; color: var(--ink);
+      padding-bottom: 14px; border-bottom: 1px solid var(--line);
+      margin-bottom: 14px;
+    }
+    .job-card .job-row { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .job-card .job-row dt {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 4px;
+    }
+    .job-card .job-row dd { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* Part B — 9 프로젝트 (펼침 없이 항상 노출) */
+    .proj-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .proj-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1280px) { .proj-grid { grid-template-columns: repeat(3, 1fr); } }
+    .proj-card { padding: 0; height: 100%; }
+    .proj-card-core { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .proj-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 999px;
+      color: var(--accent); background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      align-self: flex-start;
+    }
+    .proj-status {
+      display: inline-block;
+      font-size: 9px; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 999px;
+      color: #B45309; background: #FEF3C7;
+      border: 1px solid #FCD34D;
+      margin-left: 6px; vertical-align: middle;
+    }
+    .proj-dept {
+      font-size: 11px; font-weight: 700;
+      color: var(--muted); letter-spacing: 0.04em;
+    }
+    .proj-name {
+      font-size: 17px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.01em; line-height: 1.4;
+    }
+    .proj-kpi {
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px;
+    }
+    .proj-kpi .before {
+      font-family: 'Geist', sans-serif;
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .proj-kpi .arrow { color: var(--accent); margin: 0 10px; font-weight: 800; font-size: 16px; }
+    .proj-kpi .after {
+      font-family: 'Geist', sans-serif;
+      font-size: 22px; font-weight: 800; color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+    .proj-kpi .pct {
+      margin-left: auto;
+      font-family: 'Geist', sans-serif;
+      font-size: 12px; font-weight: 800; color: var(--accent-deep);
+      letter-spacing: 0.02em;
+      padding: 4px 10px; border-radius: 999px;
+      background: var(--soft-strong);
+    }
+    .proj-quote {
+      font-size: 13px; color: var(--ink); line-height: 1.65;
+      font-style: italic;
+      padding: 12px 16px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 5%, transparent);
+      border-radius: 0 12px 12px 0;
+    }
+    .proj-body {
+      display: grid; grid-template-columns: 1fr; gap: 14px;
+      padding-top: 12px; border-top: 1px solid var(--line);
+    }
+    .proj-body dt {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 4px;
+    }
+    .proj-body dd { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .proj-body dd strong { color: var(--ink); font-weight: 600; }
+
+    /* Part C — Insight (dark) + Recommend (light) */
+    .insight-section {
+      background: var(--ink); color: var(--panel);
+      padding: 80px 0; margin-top: 80px;
+      border-radius: 32px;
+    }
+    @media (min-width: 768px) { .insight-section { padding: 96px 0; } }
+    .insight-section .container { padding: 0 32px; }
+    @media (min-width: 768px) { .insight-section .container { padding: 0 56px; } }
+    .insight-section .eyebrow.on-dark { margin-bottom: 18px; }
+    .insight-section h3 {
+      font-size: 26px; font-weight: 800; color: var(--panel);
+      letter-spacing: -0.012em; line-height: 1.3; margin-bottom: 36px;
+    }
+    @media (min-width: 768px) { .insight-section h3 { font-size: 32px; } }
+    .insight-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .insight-grid { grid-template-columns: repeat(3, 1fr); } }
+    .insight-card {
+      padding: 28px 26px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .insight-card .ico {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      color: var(--soft);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .insight-card h4 { font-size: 16px; font-weight: 800; color: var(--panel); letter-spacing: -0.005em; margin-bottom: 8px; }
+    .insight-card p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.78; }
+
+    .insight-bar {
+      margin-top: 24px;
+      padding: 32px 36px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, var(--accent), var(--accent-deep));
+      display: grid; gap: 24px; grid-template-columns: 1fr;
+      align-items: center;
+    }
+    @media (min-width: 640px) { .insight-bar { grid-template-columns: auto 1fr; gap: 32px; } }
+    .insight-bar .num {
+      font-family: 'Geist', sans-serif;
+      font-size: 56px; font-weight: 800; color: var(--panel);
+      letter-spacing: -0.04em; line-height: 1; white-space: nowrap;
+      font-feature-settings: "tnum";
+    }
+    @media (min-width: 768px) { .insight-bar .num { font-size: 72px; } }
+    .insight-bar .text { font-size: 14px; color: rgba(255,255,255,0.92); line-height: 1.78; }
+    .insight-bar .text strong { color: var(--panel); font-weight: 700; }
+
+    .recommend-grid { display: grid; gap: 16px; grid-template-columns: 1fr; margin-top: 32px; }
+    @media (min-width: 768px) { .recommend-grid { grid-template-columns: repeat(3, 1fr); } }
+    .recommend-card { padding: 32px 28px; height: 100%; }
+    .recommend-card .ico {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .recommend-card h4 { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.4; margin-bottom: 10px; }
+    .recommend-card p { font-size: 13px; color: var(--muted); line-height: 1.78; }
+
+    /* Outcomes */
+    .outcomes-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) {
+      .outcomes-grid { grid-template-columns: repeat(6, 1fr); }
+      .outcomes-grid > *:nth-child(1),
+      .outcomes-grid > *:nth-child(2),
+      .outcomes-grid > *:nth-child(3) { grid-column: span 2; }
+      .outcomes-grid > *:nth-child(4),
+      .outcomes-grid > *:nth-child(5) { grid-column: span 3; }
+    }
+    .outcome-card { padding: 36px 32px; height: 100%; position: relative; }
+    .outcome-card.first { background: var(--ink); color: var(--panel); border-radius: 22px; }
+    .outcome-card .check {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 18px;
+    }
+    .outcome-card .check::before {
+      content: '✓'; width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent); color: var(--panel);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .outcome-card.first .check { color: var(--soft); }
+    .outcome-card.first .check::before { background: var(--accent); }
+    .outcome-card h3 { font-size: 19px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; margin-bottom: 12px; }
+    .outcome-card.first h3 { color: var(--panel); }
+    .outcome-card p { font-size: 14px; color: var(--muted); line-height: 1.78; }
+    .outcome-card.first p { color: rgba(255,255,255,0.7); }
+
+    /* Bridge text */
+    .bridge {
+      max-width: 720px; margin: 56px auto 0;
+      text-align: center;
+      font-size: 14px; color: var(--muted); font-style: italic;
+      padding: 0 24px;
+    }
+    .bridge::before, .bridge::after { content: '— '; opacity: 0.5; }
+    .bridge::after { content: ' —'; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line); padding: 32px 0 40px; margin-top: 64px;
+    }
+    .footer-row {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .footer-row .who { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .footer-row .tag {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Pill Nav -->
+  <div class="nav-shell">
+    <nav class="glass-nav" aria-label="주요 메뉴">
+      <a href="#hero" class="nav-logo">
+        <span class="dot"><iconify-icon icon="solar:bolt-circle-bold" width="18" height="18"></iconify-icon></span>
+        <span>Portfolio · NICE 그룹 AI 내재화 워크숍</span>
+      </a>
+      <div class="nav-links">
+        <a href="#context" class="smooth">배경</a>
+        <a href="#solution" class="smooth">솔루션</a>
+        <a href="#report" class="smooth">수행 결과</a>
+        <a href="#outcomes" class="smooth">성과</a>
+      </div>
+      <button id="menuButton" class="nav-mobile-btn" aria-label="메뉴 열기" aria-expanded="false">
+        <iconify-icon icon="solar:hamburger-menu-linear" width="20" height="20"></iconify-icon>
+      </button>
+    </nav>
+    <div id="mobileMenu" class="mobile-panel smooth">
+      <a href="#context">배경</a>
+      <a href="#solution">솔루션</a>
+      <a href="#report">수행 결과</a>
+      <a href="#outcomes">성과</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="reveal" style="--index: 0">
+            <span class="eyebrow">
+              <iconify-icon icon="solar:layers-bold" width="14" height="14"></iconify-icon>
+              Project 02 · B2B 교육 컨설팅
+            </span>
+            <h1>나이스그룹 전 계열사<br/><span class="accent">AI 내재화</span> 워크숍</h1>
+            <p class="lead">
+              DT 조직과 일반 직군이 같은 언어로 협업하는 조직을 만들기 위해, <strong>두 트랙이 맞물리는 실무 자동화 교육 체계</strong>를 기획·운영했습니다.
+              13개 계열사 임직원이 직무별 미션 실습으로 자동화 사례를 도출했고, 그 결과는 그룹의 일하는 방식을 바꾸는 자산이 되었습니다.
+            </p>
+          </div>
+
+          <div class="reveal hero-card" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core meta-card">
+                <div class="head">
+                  <div>
+                    <p class="meta">Project Snapshot</p>
+                    <h2>프로젝트 한눈에</h2>
+                  </div>
+                  <div class="ico"><iconify-icon icon="solar:graph-up-bold" width="26" height="26"></iconify-icon></div>
+                </div>
+                <dl class="rows">
+                  <div class="meta-row"><dt>Client</dt><dd>나이스그룹 (13개 계열사)</dd></div>
+                  <div class="meta-row"><dt>Role</dt><dd><span class="accent">PM</span> · 기획·운영 총괄</dd></div>
+                  <div class="meta-row"><dt>Scope</dt><dd>전 임직원 · Two-Track 육성</dd></div>
+                  <div class="meta-row"><dt>Period</dt><dd>2025 — 2026</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section id="context" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">
+            <iconify-icon icon="solar:target-linear" width="14" height="14"></iconify-icon>
+            Background
+          </span>
+          <h2>핵심 문제는 <span class="accent">단 하나</span>였습니다</h2>
+          <p class="lead-after">
+            각 계열사마다 DT 조직을 갖추고 있었지만,
+            <strong>일반 직원과 DT 조직 사이에 언어와 기술 수준의 간극</strong>이 컸습니다.
+            이 간극이 그룹 전반의 디지털 전환 속도를 결정짓는 핵심 변수였습니다.
+          </p>
+        </div>
+
+        <div class="ctx-grid">
+          <div class="reveal" style="--index: 0">
+            <div class="bezel-dark">
+              <div class="bezel-core ctx-card dark">
+                <span class="ctx-tag">Problem · DT 조직</span>
+                <h3>기술은 있지만<br/>기획력이 부족하다</h3>
+                <p>자동화 기술을 다룰 수 있지만 현업 문제와 연결하는 기획 역량이 부족했습니다. 도구 활용 능력이 실질적인 업무 혁신으로 이어지지 않는 구조였습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core ctx-card">
+                <span class="ctx-tag">Problem · 일반 직군</span>
+                <h3>AI를 배워도<br/>현업에서 쓰지 못한다</h3>
+                <p>교육을 들어도 실제 업무에 적용하기 어려웠습니다. 직무별로 어떤 데이터를 어떻게 AI와 연결해야 하는지에 대한 구체적인 기준과 사례가 부족했기 때문입니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section id="solution" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">
+            <iconify-icon icon="solar:routing-2-linear" width="14" height="14"></iconify-icon>
+            Solution Structure
+          </span>
+          <h2>두 조직이 자연스럽게 맞물려 작동할 수 있는 <span class="accent">프로그램</span>을 설계했습니다</h2>
+          <p class="lead-after">
+            DT 조직과 일반 직군이 동시에 성장하며 서로의 언어를 맞춰가는 <strong>Two-Track 육성 체계</strong>를 기획했습니다.
+          </p>
+        </div>
+
+        <div class="reveal sol-goal">
+          <span class="goal-tag">Goal</span>
+          <p>
+            <strong>DT 조직은 현업 문제를 기획하는 역량을 키우고,<br/>
+            일반 직군은 반복 업무를 AI로 스스로 해결하는 경험을 갖는다.</strong>
+          </p>
+        </div>
+
+        <div class="track-grid">
+          <div class="reveal" style="--index: 0">
+            <div class="bezel">
+              <div class="bezel-core track-card">
+                <span class="track-tag">Track A · 일반 직군</span>
+                <h3>AI 리터러시 &<br/>실무 적용 교육</h3>
+                <p class="who">기획 · 마케팅 · 영업 · 경영지원 직군</p>
+                <p>직군별 페인 포인트를 분석해 맞춤 커리큘럼을 설계했습니다. 교육 당일 목표를 설정하고, 5일간 미션을 수행하며 AI를 현업에 직접 적용하는 구조입니다.</p>
+                <div class="track-steps">
+                  <div class="track-step"><div class="num">1</div><div class="desc">교육 당일 — 내 업무의 AI 적용 목표 설정</div></div>
+                  <div class="track-step"><div class="num">2</div><div class="desc">현업 복귀 후 5일 — 미션 워크북으로 단계별 적용</div></div>
+                  <div class="track-step"><div class="num">3</div><div class="desc">업무 활용 사례 공모전 제출로 성과 가시화</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core track-card">
+                <span class="track-tag">Track B · DT 부서</span>
+                <h3>노코드 자동화 &<br/>현업 기획력 강화</h3>
+                <p class="who">각 계열사 DT 전담 조직</p>
+                <p>n8n 기반 노코드 자동화 실습을 통해 기술 숙련도를 높이되, 핵심은 <strong>기술을 현업 문제 해결로 연결하는 기획력</strong>에 두었습니다.</p>
+                <div class="track-steps">
+                  <div class="track-step"><div class="num">1</div><div class="desc">현업 자동화 과제 정의 — 문제 기획부터 시작</div></div>
+                  <div class="track-step"><div class="num">2</div><div class="desc">n8n 워크플로우 설계 및 실습 수행</div></div>
+                  <div class="track-step"><div class="num">3</div><div class="desc">자동화 결과물 기록 및 현업 적용 증빙</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sol-results">
+          <div class="reveal" style="--index: 0">
+            <div class="bezel">
+              <div class="bezel-core sol-result-card">
+                <div class="ico"><iconify-icon icon="solar:link-circle-bold" width="22" height="22"></iconify-icon></div>
+                <h4>같은 언어로 협업하는 조직</h4>
+                <p>DT 조직의 기획안을 일반 직원이 이해하고, 일반 직원의 페인 포인트를 DT 조직이 자동화로 연결하는 선순환이 완성됩니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core sol-result-card">
+                <div class="ico"><iconify-icon icon="solar:graph-new-up-bold" width="22" height="22"></iconify-icon></div>
+                <h4>교육 → 현업 연결 구조</h4>
+                <p>미션 워크북이 교육과 현업 사이의 브릿지 역할을 하여 학습이 실제 업무 변화로 이어지는 경로를 만들었습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 2">
+            <div class="bezel">
+              <div class="bezel-core sol-result-card">
+                <div class="ico"><iconify-icon icon="solar:cup-star-bold" width="22" height="22"></iconify-icon></div>
+                <h4>우수 사례 환류로 내재화 가속</h4>
+                <p>시간절감·실용성·새로운 시도의 3대 지표로 사례를 선정·시상하여 AI 활용 문화가 조직 전반으로 확산되는 체계를 구축했습니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RESULT REPORT -->
+    <section id="report" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="rp-track-note">
+            <iconify-icon icon="solar:chart-2-bold" width="14" height="14"></iconify-icon>
+            Track A · 프로그램 수행 결과
+          </span>
+          <h2>현업이 어떻게 <span class="accent">바뀌었는가</span></h2>
+          <p class="lead-after">
+            일반 직군 임직원이 도출한 자동화 사례를 직무군별로 정리했습니다.
+          </p>
+        </div>
+
+        <!-- Part A — 5 직무군 -->
+        <div class="part-label">Part A · 직무군 한눈에</div>
+        <h3 class="part-title">5개 직무군에서 도출된 자동화 니즈</h3>
+        <div class="job-grid">
+          <div class="reveal" style="--index: 0">
+            <div class="bezel">
+              <div class="bezel-core job-card">
+                <div class="job-head">
+                  <div class="job-ico">📊</div>
+                  <div>
+                    <div class="job-name">기업·자산 평가</div>                  </div>
+                </div>
+                <div class="job-scope">펀드평가1팀 · 기업가치1팀</div>
+                <dl class="job-row">
+                  <div><dt>주요 실습 업무</dt><dd>비상장 기업 리서치, 산업 뉴스 자동 취합·요약</dd></div>
+                  <div><dt>AI 활용 핵심 니즈</dt><dd>애널리스트 수준 구조화 프롬프트, 출처·요약·키워드 동시 처리</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core job-card">
+                <div class="job-head">
+                  <div class="job-ico">🔍</div>
+                  <div>
+                    <div class="job-name">신용·채권 분석</div>                  </div>
+                </div>
+                <div class="job-scope">정보시스템실 · 경영기획본부</div>
+                <dl class="job-row">
+                  <div><dt>주요 실습 업무</dt><dd>신용평가 자료 자동 브리핑, 채권시장 일일 모니터링</dd></div>
+                  <div><dt>AI 활용 핵심 니즈</dt><dd>9개 출처 동시 취합, 영향 포인트 추출, 자동 알림 구조</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 2">
+            <div class="bezel">
+              <div class="bezel-core job-card">
+                <div class="job-head">
+                  <div class="job-ico">📝</div>
+                  <div>
+                    <div class="job-name">경영 지원</div>                  </div>
+                </div>
+                <div class="job-scope">경영지원실 · NICE인프라 경영지원실</div>
+                <dl class="job-row">
+                  <div><dt>주요 실습 업무</dt><dd>차량 사용·월간 지표관리 보고서 자동화</dd></div>
+                  <div><dt>AI 활용 핵심 니즈</dt><dd>CSV 업로드 → 집계·분석·보고서 초안 원샷 처리</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 3">
+            <div class="bezel">
+              <div class="bezel-core job-card">
+                <div class="job-head">
+                  <div class="job-ico">🤝</div>
+                  <div>
+                    <div class="job-name">영업·CS</div>                  </div>
+                </div>
+                <div class="job-scope">KIS 법인사업2실</div>
+                <dl class="job-row">
+                  <div><dt>주요 실습 업무</dt><dd>실적 집계 → 사내 공지 초안 자동 생성</dd></div>
+                  <div><dt>AI 활용 핵심 니즈</dt><dd>데이터 추출·증감율 계산·공지문 작성 통합</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 4">
+            <div class="bezel">
+              <div class="bezel-core job-card">
+                <div class="job-head">
+                  <div class="job-ico">⚙️</div>
+                  <div>
+                    <div class="job-name">IT·운영 관제</div>                  </div>
+                </div>
+                <div class="job-scope">IT 운영 · 영상사업실</div>
+                <dl class="job-row">
+                  <div><dt>주요 실습 업무</dt><dd>ETL 이상 감지·주간 운영 보고, 주차유도시스템 PM</dd></div>
+                  <div><dt>AI 활용 핵심 니즈</dt><dd>로그 자동 감지, 다현장 동시 관리, 리스크 사전 알림</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part B — 9 프로젝트 -->
+        <div class="part-label">Part B · 개인 프로젝트 카탈로그</div>
+        <h3 class="part-title">참여자 직무별 AI 자동화 사례</h3>
+        <div class="proj-grid">
+
+          <div class="reveal" style="--index: 0">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">📊 기업·자산 평가</span>
+                  <div class="proj-dept">펀드평가1팀</div>
+                  <div class="proj-name">비상장 기업 리서치 자동화 — 애널리스트 수준 프롬프트 설계</div>
+                  <div class="proj-kpi">
+                    <span class="before">2h</span>
+                    <span class="arrow">→</span>
+                    <span class="after">24m</span>
+                    <span class="pct">80% 절감</span>
+                  </div>
+                  <div class="proj-quote">보다 깊게 리서치하면서 평가의 깊이를 더한 느낌</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>분기마다 반복되는 비상장 기업 조사. 검색 30~60분 + 정리 20분 + 분석 30분으로 건당 최대 2시간. 빠듯한 일정으로 조사 품질 저하 및 야근.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>Executive Summary → 사업모델 → 재무추정 → 밸류에이션 → 리스크 순으로 구조화된 리서치 초안 자동 생성. 사실/해석/의견을 명확히 구분.</dd></div>
+                    <div><dt>결과물</dt><dd>완성 프롬프트 + 입력 템플릿 구성. GPTs 챗봇 제작 및 팀 내 문서화 공유 계획 수립.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">📊 기업·자산 평가</span>
+                  <div class="proj-dept">기업가치1팀</div>
+                  <div class="proj-name">반도체 산업 뉴스 자동 취합 및 비상장주식 평가 연계 리포트</div>
+                  <div class="proj-kpi">
+                    <span class="before">30m</span>
+                    <span class="arrow">→</span>
+                    <span class="after">1m</span>
+                    <span class="pct">97% 절감</span>
+                  </div>
+                  <div class="proj-quote">완전 자동화로 매주 7시간 30분이 사라졌다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>매일 기사 5개 취합 30분 + 주간 35개 기사 요약 4시간 + 보고서 작성 3시간으로 주 7시간 30분 소요.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>금융권 산업 분석 전문가 역할 부여. 기사 제목·출처·요약·키워드·주식 가격 영향을 한 번에 생성. 표 형식으로 정리.</dd></div>
+                    <div><dt>결과물</dt><dd>반도체 섹터 뉴스 자동 취합 프롬프트. 표 형식 출력으로 평가 보고서 즉시 연계.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 2">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">🔍 신용·채권 분석</span>
+                  <div class="proj-dept">정보시스템실</div>
+                  <div class="proj-name">신용평가 업체 기사 + DART 공시 자동 브리핑 시스템</div>
+                  <div class="proj-kpi">
+                    <span class="before">2h30m</span>
+                    <span class="arrow">→</span>
+                    <span class="after">30m</span>
+                    <span class="pct">80% 절감</span>
+                  </div>
+                  <div class="proj-quote">주요 이슈 누락 리스크가 거의 사라졌다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>평가 업체별 포털 기사 검색 + DART 공시 수동 확인에 매일 2시간 30분. 주요 이슈 누락 위험 상존.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>매일 9시 전일 기사 + DART 공시 자동 취합. 10줄 이내 요약 브리핑. 담당 업체 사전 등록.</dd></div>
+                    <div><dt>결과물</dt><dd>담당 업체 등록형 자동 브리핑 프롬프트. 정정 공시 누락 문제는 프롬프트 개선으로 해결.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 3">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">🔍 신용·채권 분석</span>
+                  <div class="proj-dept">경영기획본부</div>
+                  <div class="proj-name">채권시장 모니터링 자동화 — 9개 언론사 동시 취합</div>
+                  <div class="proj-kpi">
+                    <span class="before">1h</span>
+                    <span class="arrow">→</span>
+                    <span class="after">2m</span>
+                    <span class="pct">97% 절감</span>
+                  </div>
+                  <div class="proj-quote">AI는 개인 비서다 — 회의하듯 대화하며 다듬어가야 한다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>연합인포맥스 등 9개 언론사·기관 직접 접속하여 채권 관련 기사 수동 선별 후 보고. 매일 30분~1시간.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>채권평가 20년 전문가 관점 프롬프트. 키워드 필터링·본문 분석·영향 포인트 추출·Excel 저장까지 원스톱.</dd></div>
+                    <div><dt>결과물</dt><dd>그룹웨어 Share 페이지에 등록하여 팀원 누구나 복사 후 실행 가능. 파이썬 자동화 추진 계획.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 4">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">📝 경영 지원</span>
+                  <div class="proj-dept">NICE인프라 경영지원실</div>
+                  <div class="proj-name">월간 지표관리 보고서 자동화 — 수작업 오류 제로화</div>
+                  <div class="proj-kpi">
+                    <span class="before">8h</span>
+                    <span class="arrow">→</span>
+                    <span class="after">12m</span>
+                    <span class="pct">98% 절감</span>
+                  </div>
+                  <div class="proj-quote">평소 안 보이던 이상값이 보이기 시작했다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>명부 데이터 정리 1일 + 보고서 작성 2시간 + 팀장 검토·수정 3일로 총 3일. 수작업 오류 월 평균 2~3건.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>매크로로 데이터 자동 추출 + CSV 업로드 후 인력현황·변동항목·T.O 과부족·이슈 대응 한 번에 생성. GPTs로 팀 공용화.</dd></div>
+                    <div><dt>결과물</dt><dd>팀 공용 GPTs. 매크로 → CSV → 보고서까지 단일 흐름으로 통합.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 5">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">📝 경영 지원</span>
+                  <div class="proj-dept">경영지원실</div>
+                  <div class="proj-name">업무용 차량 사용 현황 보고서 자동화</div>
+                  <div class="proj-kpi">
+                    <span class="before">5h30m</span>
+                    <span class="arrow">→</span>
+                    <span class="after">30m</span>
+                    <span class="pct">91% 절감</span>
+                  </div>
+                  <div class="proj-quote">반복 집계에서 해방, 인사이트가 풍부해졌다 — 팀장 피드백</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>차량별 월별 사용 데이터 수동 집계 → 보고서 작성 → 오류 수정까지 총 5시간 30분. 변경 이력·누락 문제 상존.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>xlsx 업로드 후 차량번호별 월별 사용일자·거리·시간 자동 집계 및 보고서 초안 생성. GPTs로 팀원 공용.</dd></div>
+                    <div><dt>결과물</dt><dd>차량 보고서 GPTs. 이상값 탐지 항목 별도 출력으로 분석 집중 가능.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 6">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">🤝 영업·CS</span>
+                  <div class="proj-dept">KIS 법인사업2실</div>
+                  <div class="proj-name">영업 실적 집계 및 사내 공지 초안 자동 생성</div>
+                  <div class="proj-kpi">
+                    <span class="before">30m</span>
+                    <span class="arrow">→</span>
+                    <span class="after">5m</span>
+                    <span class="pct">83% 절감</span>
+                  </div>
+                  <div class="proj-quote">엑셀 따로 만들 일이 없어졌다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>UBMS 데이터 추출 → 엑셀 양식 집계 → 사내 공지 재입력의 3단계 수작업. 증감율 계산 오류·복붙 반복으로 약 30분.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>CSV 업로드 후 실적 집계 + 증감율 계산 + 공지문 초안 생성을 한 번에. 명확한 산정 기준을 프롬프트에 포함.</dd></div>
+                    <div><dt>결과물</dt><dd>실적 집계·공지문 통합 프롬프트. 별도 엑셀 작성 불필요한 단일 흐름.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 7">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">⚙️ IT·운영 관제</span>
+                  <div class="proj-dept">IT 운영팀</div>
+                  <div class="proj-name">ETL 프로세스 이상 감지 및 주간 운영 보고 자동화</div>
+                  <div class="proj-kpi">
+                    <span class="before">주 3h</span>
+                    <span class="arrow">→</span>
+                    <span class="after">주 12m</span>
+                    <span class="pct">93% 절감 · 연 504h</span>
+                  </div>
+                  <div class="proj-quote">자동화는 편의 기능이 아니라 서비스 안정성을 결정하는 핵심 시스템이다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>로그 직접 확인 → 수동 장애 분석 → SQL 집계 → 엑셀 보고서 작성. 주간 보고서만 3시간. 새벽 장애 뒤늦게 인지.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>서버 로그 [ERROR][WARNING] 키워드 자동 감지 → ETL 처리 현황 자동 집계 → 주간 운영 현황 보고서 자동 생성.</dd></div>
+                    <div><dt>결과물</dt><dd>로그 감지·집계·보고 통합 워크플로우. 장애 인지 18분 → 2분, ETL 성공률 98.7% → 99.94%.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--index: 8">
+            <div class="bezel">
+              <div class="bezel-core proj-card">
+                <div class="proj-card-core">
+                  <span class="proj-tag">⚙️ IT·운영 관제</span>
+                  <div class="proj-dept">영상사업실</div>
+                  <div class="proj-name">주차유도시스템 PM 업무 자동화 — 6단계 → 4시트 통합 관리 설계</div>
+                  <div class="proj-kpi">
+                    <span class="before">20h/월</span>
+                    <span class="arrow">→</span>
+                    <span class="after">2~3h/월</span>
+                    <span class="pct">Target ~90%</span>
+                  </div>
+                  <div class="proj-quote">프롬프트 생성기로 프롬프트를 다듬고 다시 넣고를 반복했다</div>
+                  <dl class="proj-body">
+                    <div><dt>현안</dt><dd>여러 현장 동시 진행 시 자재·일정·AS 정보가 섞여 자재 누락·오투입·일정 충돌 리스크 상시 발생. 직접 확인·작성만 7시간 42분/건.</dd></div>
+                    <div><dt>AI 활용 전략</dt><dd>PM 비서 역할 + 자동 점검 기준 11개 + 리스크 등급 4단계 내장. 4개 시트(현장 종합 / 자재 / 공사 일정 / 리스크)로 분리 설계.</dd></div>
+                    <div><dt>결과물</dt><dd>4시트 표준 양식 + 검증 기능 내장 PM 업무관리 프롬프트 v2. 프롬프트 생성기로 반복 정련.</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Part C — Block 1: 인사이트 (다크) -->
+        <div class="insight-section">
+          <div class="container">
+            <span class="eyebrow on-dark">Part C · 종합 인사이트</span>
+            <h3>참여자 데이터에서 나온 공통 패턴</h3>
+            <div class="insight-grid">
+              <div class="insight-card">
+                <div class="ico"><iconify-icon icon="solar:clock-circle-bold" width="22" height="22"></iconify-icon></div>
+                <h4>반복 업무 시간 단축</h4>
+                <p>직군·계열사와 무관하게 모든 참여자의 목표가 하나로 수렴했습니다. 매일·매주 반복되는 단순 업무에서 벗어나고 싶다는 니즈가 명확했습니다.</p>
+              </div>
+              <div class="insight-card">
+                <div class="ico"><iconify-icon icon="solar:target-bold" width="22" height="22"></iconify-icon></div>
+                <h4>고부가가치 업무 집중</h4>
+                <p>시간을 아끼는 것 자체가 목표가 아니었습니다. 확보한 시간을 분석·전략·판단 등 사람만이 할 수 있는 업무에 집중하겠다는 의지가 공통적으로 나타났습니다.</p>
+              </div>
+              <div class="insight-card">
+                <div class="ico"><iconify-icon icon="solar:wi-fi-router-bold" width="22" height="22"></iconify-icon></div>
+                <h4>자발적 팀 확산</h4>
+                <p>참여자 전원이 완성한 프롬프트를 팀 공유 드라이브에 문서화하거나 GPTs로 공용화하는 계획을 자발적으로 수립했습니다.</p>
+              </div>
+            </div>
+            <div class="insight-bar">
+              <div class="num">100%</div>
+              <div class="text">
+                직군·직급·계열사에 관계없이 <strong>참여자 전원이 반복 업무 자동화</strong>를 핵심 목표로 설정했고,<br/>
+                그 목표가 5일 안에 실제 업무 변화로 이어졌습니다.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- OUTCOMES -->
+    <section id="outcomes" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">
+            <iconify-icon icon="solar:cup-star-bold" width="14" height="14"></iconify-icon>
+            Outcomes
+          </span>
+          <h2>주요 <span class="accent">성과</span></h2>
+          <p class="lead-after">
+            단순 교육 운영이 아닌, <strong>조직의 일하는 방식이 바뀌는 구조</strong>를 만들었습니다.
+          </p>
+        </div>
+
+        <div class="outcomes-grid">
+          <div class="reveal" style="--index: 0">
+            <div class="outcome-card first">
+              <div class="check">성과 01</div>
+              <h3>전사 AI 교육<br/>인프라 완비</h3>
+              <p>13개 계열사 임직원을 직무·숙련도별로 분류하여 수준별 맞춤 AI 교육 체계를 완성하고 그룹 전체의 디지털 역량을 상향 평준화했습니다.</p>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core outcome-card">
+                <div class="check">성과 02</div>
+                <h3>교육-현업 연결<br/>구조 안착</h3>
+                <p>'교육→미션→사례 제출'의 5일 프로세스를 통해 일회성 교육이 아닌, 현업에서 AI가 실제로 작동하는 지속 가능한 학습 모델을 만들었습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 2">
+            <div class="bezel">
+              <div class="bezel-core outcome-card">
+                <div class="check">성과 03</div>
+                <h3>즉각적 업무 혁신<br/>경험 제공</h3>
+                <p>직무별 맞춤 미션북으로 학습 직후 자신의 업무에 AI를 직접 적용하는 경험을 제공하고, 우수 사례 환류로 조직 내 AI 문화를 확산했습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 3">
+            <div class="bezel">
+              <div class="bezel-core outcome-card">
+                <div class="check">성과 04</div>
+                <h3>우수 사례 전사<br/>확산 체계 구축</h3>
+                <p>개별 자동화 사례를 사내 라이브러리로 축적·공유하는 플랫폼을 구축하고, 우수 사례 발굴 → 시상 → 전사 확산으로 이어지는 운영 사이클을 정착시켰습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" style="--index: 4">
+            <div class="outcome-card first">
+              <div class="check">성과 05</div>
+              <h3>GPTs · 프롬프트<br/>자산화 체계 구축</h3>
+              <p>팀별로 분산되어 있던 GPTs와 프롬프트를 그룹 공용 라이브러리로 통합하여, AI 자산 인프라를 구축했습니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-row">
+        <div class="who">© 2026 AX Consulting Portfolio · B2B Education · AI Transformation</div>
+        <div class="tag">NICE Holdings · Two-Track Workshop</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Mobile menu
+    const btn = document.getElementById('menuButton');
+    const panel = document.getElementById('mobileMenu');
+    if (btn && panel) {
+      btn.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+      });
+      panel.querySelectorAll('a').forEach((a) =>
+        a.addEventListener('click', () => {
+          panel.classList.remove('open');
+          btn.setAttribute('aria-expanded', false);
+        })
+      );
+    }
+  </script>
+
+</body>
+</html>
