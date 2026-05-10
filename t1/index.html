@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI를 샀다고, AX가 되는 건 아닙니다 · 2026 모두의연구소 KHP팀 사업 소개서</title>
+  <meta name="description" content="이미 AI를 도입한 기업이 가장 위험할 수 있습니다. AI 도입 4단계 진단으로 본 격차의 진짜 원천." />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+
+  <style>
+    :root {
+      --base: #F8F5FA;
+      --panel: #FFFFFF;
+      --ink: #1A1238;
+      --muted: #6E6979;
+      --accent: #6366F1;
+      --accent-deep: #4338CA;
+      --soft: #E0E7FF;
+      --soft-strong: #C7D2FE;
+      --line: rgba(26, 18, 56, 0.1);
+      --line-strong: rgba(26, 18, 56, 0.18);
+      --shadow-card: 0 22px 70px -46px rgba(67, 56, 202, 0.4);
+      --shadow-amber: 0 24px 80px -34px rgba(99, 102, 241, 0.42);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--base); }
+    body {
+      font-family: 'Pretendard', 'Geist', system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(99, 102, 241, 0.14), transparent 24rem),
+        radial-gradient(circle at 92% 12%, rgba(167, 139, 250, 0.12), transparent 22rem),
+        linear-gradient(135deg, rgba(26, 18, 56, 0.04) 0 1px, transparent 1px 42px),
+        var(--base);
+      color: var(--ink);
+      word-break: keep-all;
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    .smooth { transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    .reveal { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+    .reveal.is-visible {
+      animation: fadeInUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--index, 0) * 80ms);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes floatPanel {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 768px) { .container { padding: 0 32px; } }
+
+    /* Glass pill nav */
+    .nav-shell {
+      position: fixed;
+      inset-inline: 0;
+      top: 16px;
+      z-index: 40;
+      padding: 0 16px;
+    }
+    .glass-nav {
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: color-mix(in srgb, var(--panel) 82%, transparent);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px -34px rgba(67, 56, 202, 0.35), inset 0 1px 0 rgba(255,255,255,0.9);
+      max-width: 1180px;
+      margin: 0 auto;
+      border-radius: 999px;
+      padding: 10px 14px 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .nav-logo .dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-amber);
+    }
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-mobile-btn {
+      display: flex;
+      width: 38px; height: 38px;
+      align-items: center; justify-content: center;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      color: var(--ink);
+      cursor: pointer;
+      border: none;
+    }
+    @media (min-width: 880px) {
+      .nav-mobile-btn { display: none; }
+    }
+    @media (max-width: 879px) {
+      .nav-links { display: none; }
+      .nav-logo { font-size: 12px; }
+    }
+    @media (max-width: 480px) {
+      .nav-logo span:not(.dot) {
+        font-size: 11px;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .mobile-panel {
+      transform: translateY(-12px);
+      opacity: 0;
+      pointer-events: none;
+      max-width: 1180px;
+      margin: 8px auto 0;
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--panel) 96%, transparent);
+      border: 1px solid var(--line);
+      padding: 16px;
+      box-shadow: var(--shadow-amber);
+    }
+    .mobile-panel.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .mobile-panel a {
+      display: block;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .mobile-panel a:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+    @media (min-width: 880px) { .mobile-panel { display: none; } }
+
+    /* Bezel system */
+    .bezel {
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      border: 1px solid var(--line);
+      padding: 6px;
+      border-radius: 28px;
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.92);
+    }
+    .bezel-core {
+      border-radius: 22px;
+      background: linear-gradient(145deg, var(--panel), color-mix(in srgb, var(--panel) 88%, var(--soft)));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.9);
+    }
+    .bezel-dark { background: var(--ink); border: 1px solid rgba(255,255,255,0.08); padding: 6px; border-radius: 28px; }
+    .bezel-dark > * { border-radius: 22px; background: var(--ink); padding: 24px; color: var(--panel); }
+
+    /* Eyebrow chip */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+    .eyebrow.on-dark {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.16);
+      color: var(--soft);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 130px 0 72px;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .hero { padding: 160px 0 96px; } }
+    .hero-grid {
+      display: grid;
+      gap: 48px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1.05fr 0.95fr; align-items: center; } }
+
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+    @media (min-width: 640px) { .hero h1 { font-size: 52px; } }
+    @media (min-width: 1024px) { .hero h1 { font-size: 64px; } }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p.lead {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 560px;
+    }
+    @media (min-width: 1024px) { .hero p.lead { font-size: 18px; } }
+    .hero p.lead strong { color: var(--ink); font-weight: 600; }
+
+    /* Hero diag preview card */
+    .hero-card { animation: floatPanel 7s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+    @media (max-width: 1023px) { .hero-card { animation: none; } }
+
+    .diag-card { padding: 24px; }
+    @media (min-width: 768px) { .diag-card { padding: 28px; } }
+    .diag-card .head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .diag-card .head .meta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .diag-card .head h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-top: 6px;
+      letter-spacing: -0.01em;
+    }
+    .diag-card .head .ico {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+    }
+    .diag-card .rows { display: grid; gap: 8px; padding: 20px 0; }
+    .diag-card .stage-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      align-items: center;
+    }
+    .diag-card .stage-row.active {
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+    .diag-card .stage-row .num {
+      font-family: 'Geist', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      font-feature-settings: "tnum";
+    }
+    .diag-card .stage-row .name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .diag-card .stage-row .desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .diag-card .footnote {
+      padding: 16px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    /* Marquee */
+    .marquee-section {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0;
+      background: var(--ink);
+      color: var(--panel);
+      overflow: hidden;
+    }
+    .marquee {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      animation: marquee 38s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee span {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.62);
+      letter-spacing: 0.02em;
+    }
+    .marquee .dot { color: var(--accent); }
+
+    /* Section base */
+    .section { padding: 88px 0; }
+    @media (min-width: 768px) { .section { padding: 120px 0; } }
+    .section-head { max-width: 800px; margin-bottom: 48px; }
+    .section-head .eyebrow { margin-bottom: 24px; }
+    .section h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      line-height: 1.22;
+    }
+    @media (min-width: 768px) { .section h2 { font-size: 44px; } }
+    @media (min-width: 1024px) { .section h2 { font-size: 52px; } }
+    .section .lead-after {
+      max-width: 640px;
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.78;
+      color: var(--muted);
+    }
+    @media (min-width: 1024px) { .section .lead-after { font-size: 18px; } }
+    .section .lead-after strong { color: var(--ink); font-weight: 600; }
+
+    /* Stage Transition Diagram */
+    .stage-flow {
+      margin-bottom: 56px;
+      padding: 28px;
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--panel) 60%, transparent);
+      border: 1px solid var(--line);
+    }
+    .stage-flow .flow {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .stage-flow .flow {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+        align-items: stretch;
+      }
+    }
+    .flow-node {
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .flow-node.danger {
+      background: linear-gradient(145deg, var(--panel), var(--soft));
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px -12px rgba(99, 102, 241, 0.42);
+    }
+    .flow-node .num {
+      font-family: 'Geist', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    .flow-node .name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-top: 4px;
+    }
+    .flow-node .emo {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .flow-node.danger .emo { color: var(--accent); font-weight: 600; }
+    .flow-node .danger-tag {
+      position: absolute;
+      top: -10px; right: 12px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--panel);
+    }
+    .flow-arrow {
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+    @media (max-width: 767px) {
+      .flow-arrow { transform: rotate(90deg); margin: 4px auto; }
+    }
+    .stage-flow .caption {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.65;
+    }
+    .stage-flow .caption strong { color: var(--accent); font-weight: 700; }
+
+    /* 4 stage cards */
+    .stages-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .stages-grid { grid-template-columns: 1fr 1fr; } }
+    .stage-card { padding: 28px 26px; height: 100%; }
+    @media (min-width: 768px) { .stage-card { padding: 32px; } }
+    .stage-card .row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stage-card .num-big {
+      font-family: 'Geist', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-feature-settings: "tnum";
+    }
+    .stage-card .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: var(--accent);
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+    .stage-card.dangerous { background: linear-gradient(145deg, var(--panel), color-mix(in srgb, var(--accent) 8%, var(--panel))); }
+    .stage-card.dangerous .tag {
+      background: var(--accent);
+      color: var(--panel);
+      border: 1px solid var(--accent);
+    }
+    .stage-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+    .stage-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.78;
+    }
+    @media (min-width: 768px) { .stage-card p { font-size: 15px; } }
+    .stage-card p strong { color: var(--ink); font-weight: 600; }
+    .stage-card .meta-grid {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px 16px;
+      align-items: baseline;
+    }
+    .stage-card .meta-grid dt {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .stage-card .meta-grid dd {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .stage-card .meta-grid dd.accent { color: var(--accent); }
+
+    /* Synthesis box after stage cards */
+    .synthesis-box {
+      margin-top: 32px;
+      padding: 28px;
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .synthesis-box p {
+      font-size: 16px;
+      line-height: 1.78;
+      color: var(--ink);
+    }
+    .synthesis-box p strong { color: var(--accent); font-weight: 700; }
+
+    /* Comparison Matrix */
+    .matrix-wrap { padding: 0; }
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--panel);
+    }
+    .matrix > div {
+      padding: 18px 16px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .matrix > div:nth-child(5n) { border-right: none; }
+    .matrix > div.matrix-header {
+      background: var(--ink);
+      color: var(--panel);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .matrix > div.matrix-header.empty { background: var(--ink); }
+    .matrix > div.row-label {
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .matrix > div.danger-cell {
+      background: var(--soft);
+      font-weight: 600;
+      color: var(--ink);
+    }
+    @media (max-width: 767px) {
+      .matrix { grid-template-columns: 1fr; border-radius: 18px; }
+      .matrix > div { border-right: none; }
+      .matrix > div.matrix-header.empty { display: none; }
+      .matrix > div.matrix-header {
+        text-align: left;
+        font-size: 11px;
+      }
+      .matrix > div.row-label {
+        margin-top: 8px;
+        background: var(--ink);
+        color: var(--panel);
+        font-size: 13px;
+      }
+    }
+
+    /* Evidence: Gallup gap card */
+    .gallup-card { padding: 32px; }
+    @media (min-width: 768px) { .gallup-card { padding: 44px; } }
+    .gallup-head {
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+      margin-bottom: 32px;
+    }
+    .gallup-head .ico {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallup-head .meta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .gallup-head h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-top: 4px;
+      letter-spacing: -0.01em;
+    }
+    .gallup-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    @media (min-width: 768px) { .gallup-grid { grid-template-columns: 1fr 1fr; gap: 48px; } }
+    .gallup-num {
+      font-family: 'Geist', sans-serif;
+      font-size: 80px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-feature-settings: "tnum";
+    }
+    @media (min-width: 768px) { .gallup-num { font-size: 100px; } }
+    .gallup-num.accent { color: var(--accent); }
+    .gallup-bar {
+      height: 8px;
+      background: color-mix(in srgb, var(--ink) 8%, transparent);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 18px;
+    }
+    .gallup-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gallup-label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+    .gallup-label strong { color: var(--ink); }
+    .gallup-source {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .gallup-source .src-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      flex-shrink: 0;
+    }
+    .gallup-source strong { color: var(--ink); font-weight: 700; }
+    .gallup-source a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      transition: border-color 0.2s ease;
+    }
+    .gallup-source a:hover { border-bottom-color: var(--accent); }
+
+    .gallup-callout {
+      margin-top: 24px;
+      padding: 22px;
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--accent) 9%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .gallup-callout p {
+      font-size: 16px;
+      line-height: 1.78;
+      color: var(--ink);
+    }
+    .gallup-callout p strong { color: var(--accent); font-weight: 700; }
+
+    /* Cases */
+    .cases-grid { display: grid; gap: 16px; grid-template-columns: 1fr; margin-top: 16px; }
+    @media (min-width: 768px) { .cases-grid { grid-template-columns: 1fr 1fr; } }
+    .case-card { padding: 28px; }
+    @media (min-width: 768px) { .case-card { padding: 32px; } }
+    .case-card .case-head { display: flex; gap: 14px; align-items: flex-start; }
+    .case-card .case-ico {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: var(--soft);
+      color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .case-card .meta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .case-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-top: 4px;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .case-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-top: 16px;
+    }
+    @media (min-width: 768px) { .case-card p { font-size: 15px; } }
+    .case-card p strong { color: var(--ink); font-weight: 600; }
+    .case-stats {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .case-stat {
+      padding: 12px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+    }
+    .case-stat.accent {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+    .case-stat .l { font-size: 11px; color: var(--muted); }
+    .case-stat .v {
+      font-family: 'Geist', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-top: 4px;
+      letter-spacing: -0.02em;
+    }
+    .case-stat.accent .v { color: var(--accent); }
+
+    /* Voices */
+    .voices-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+      margin-top: 56px;
+    }
+    @media (min-width: 768px) { .voices-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .voice-card {
+      padding: 28px;
+      position: relative;
+    }
+    .voice-card::before {
+      content: "“";
+      position: absolute;
+      top: 6px; left: 18px;
+      font-family: Georgia, serif;
+      font-size: 80px;
+      color: var(--accent);
+      opacity: 0.18;
+      line-height: 1;
+    }
+    .voice-card blockquote {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.7;
+      letter-spacing: -0.005em;
+      position: relative;
+      padding-top: 24px;
+    }
+    .voice-card .attr {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex; gap: 12px; align-items: center;
+    }
+    .voice-card .attr .name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .voice-card .attr .role {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .voice-card .attr .ic {
+      width: 36px; height: 36px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Implication (dark section) */
+    .impl-section {
+      background: var(--ink);
+      color: var(--panel);
+      padding: 96px 0;
+    }
+    @media (min-width: 768px) { .impl-section { padding: 128px 0; } }
+    .impl-section h2 { color: var(--panel); }
+    .impl-section h2 .accent { color: var(--accent); }
+    .impl-section .impl-grid {
+      display: grid;
+      gap: 40px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1024px) {
+      .impl-section .impl-grid {
+        grid-template-columns: 0.95fr 1.05fr;
+        align-items: start;
+        gap: 56px;
+      }
+    }
+    .impl-section .sticky-block { position: relative; }
+    @media (min-width: 1024px) { .impl-section .sticky-block { position: sticky; top: 100px; } }
+    .impl-section .sticky-block p {
+      margin-top: 24px;
+      font-size: 16px;
+      color: rgba(255,253,248,0.7);
+      line-height: 1.78;
+      max-width: 480px;
+    }
+    @media (min-width: 1024px) { .impl-section .sticky-block p { font-size: 18px; } }
+
+    .impl-cards { display: grid; gap: 14px; }
+    .impl-card {
+      padding: 6px;
+      border-radius: 28px;
+      background: rgba(255,253,248,0.08);
+    }
+    .impl-card.danger { background: color-mix(in srgb, var(--accent) 25%, rgba(255,253,248,0.06)); }
+    .impl-card .body {
+      padding: 24px;
+      border-radius: 22px;
+      background: var(--panel);
+      color: var(--ink);
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .impl-card .body { grid-template-columns: 80px 1fr; gap: 20px; align-items: start; }
+    }
+    .impl-card .num {
+      font-family: 'Geist', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .impl-card .num-meta {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .impl-card h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+    @media (min-width: 768px) { .impl-card h4 { font-size: 19px; } }
+    .impl-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+    .impl-final {
+      margin-top: 24px;
+      padding: 24px 4px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+    .impl-final .lead-line {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+    @media (min-width: 768px) { .impl-final .lead-line { font-size: 13px; } }
+    .impl-final .separator { display: none; }
+    .impl-final .punch-line {
+      margin-top: 4px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--panel);
+      letter-spacing: -0.01em;
+      line-height: 1.55;
+    }
+    .impl-final .punch-line em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    @media (min-width: 768px) { .impl-final .punch-line { font-size: 18px; } }
+
+    /* Contact */
+    .contact-card { padding: 36px; }
+    @media (min-width: 768px) { .contact-card { padding: 56px; } }
+    .contact-grid {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr auto; } }
+    .contact-card h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.012em;
+      line-height: 1.25;
+    }
+    @media (min-width: 768px) { .contact-card h2 { font-size: 40px; } }
+    .contact-card .lead-after { font-size: 16px; line-height: 1.78; color: var(--muted); margin-top: 18px; max-width: 540px; }
+    .contact-person {
+      margin-top: 36px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .contact-person .ic {
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+      flex-shrink: 0;
+    }
+    .contact-person .meta { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+    .contact-person h3 { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; margin-top: 4px; }
+    .contact-channels { margin-top: 24px; display: grid; gap: 12px; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .contact-channels { grid-template-columns: 1fr 1fr; } }
+    .contact-channel {
+      display: flex; gap: 14px; align-items: center;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      border: 1px solid var(--line);
+    }
+    .contact-channel:hover { background: var(--soft); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+    .contact-channel .ic {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: var(--soft);
+      color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-channel .l { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+    .contact-channel .v { font-size: 15px; font-weight: 800; color: var(--ink); margin-top: 2px; }
+    .contact-mark {
+      width: 132px; height: 132px;
+      border-radius: 28px;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+      flex-shrink: 0;
+    }
+    @media (max-width: 767px) { .contact-mark { display: none; } }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 36px;
+    }
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-row .who {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .footer-row .tag {
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Pill Nav -->
+  <div class="nav-shell">
+    <nav class="glass-nav" aria-label="주요 메뉴">
+      <a href="#now" class="nav-logo">
+        <span class="dot"><iconify-icon icon="solar:bolt-circle-bold" width="18" height="18"></iconify-icon></span>
+        <span>2026 모두의연구소 KHP팀 사업 소개서</span>
+      </a>
+      <div class="nav-links">
+        <a href="#now" class="smooth">AI 도입 현황</a>
+        <a href="#stages" class="smooth">AI 적용도 진단</a>
+        <a href="#data" class="smooth">Key Insights</a>
+        <a href="#implication" class="smooth">시사점</a>
+        <a href="#contact" class="smooth">연락처</a>
+      </div>
+      <button id="menuButton" class="nav-mobile-btn" aria-label="메뉴 열기" aria-expanded="false">
+        <iconify-icon icon="solar:hamburger-menu-linear" width="20" height="20"></iconify-icon>
+      </button>
+    </nav>
+    <div id="mobileMenu" class="mobile-panel smooth">
+      <a href="#now">AI 도입 현황</a>
+      <a href="#stages">AI 적용도 진단</a>
+      <a href="#data">Key Insights</a>
+      <a href="#implication">시사점</a>
+      <a href="#contact">연락처</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- AI 도입 현황 (Hero) -->
+    <section id="now" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="reveal" style="--index: 0">
+            <span class="eyebrow">
+              <iconify-icon icon="solar:stars-linear" width="14" height="14"></iconify-icon>
+              AI 도입 현황
+            </span>
+            <h1>AI를 샀다고,<br />AX가 되는 건 <span class="accent">아닙니다.</span></h1>
+            <p class="lead">
+              요즘 흔하게 보이는 풍경이 있습니다. 회사는 ChatGPT 라이선스를 도입하고, 사내 챗봇을 띄우고, 프롬프트 교육도 두어 차례 진행했습니다.
+              그런데도 같은 도구를 쓰는 회사들 사이에서 격차는 계속 벌어집니다.
+              <strong>이미 AI를 도입한 기업이, 오히려 가장 위험한 자리에 서 있을 수 있습니다.</strong>
+            </p>
+          </div>
+
+          <div class="reveal hero-card" style="--index: 1">
+            <div class="bezel">
+              <div class="bezel-core diag-card">
+                <div class="head">
+                  <div>
+                    <p class="meta">AI 도입 4단계 진단</p>
+                    <h2>우리 회사는 몇 단계입니까</h2>
+                  </div>
+                  <div class="ico"><iconify-icon icon="solar:graph-up-bold" width="26" height="26"></iconify-icon></div>
+                </div>
+                <div class="rows">
+                  <div class="stage-row">
+                    <span class="num">01</span>
+                    <div><div class="name">완전 차단형</div><div class="desc">사내 챗봇만 / 두려움</div></div>
+                  </div>
+                  <div class="stage-row active">
+                    <span class="num">02</span>
+                    <div><div class="name">활발하지만 격차가 큼</div><div class="desc">교육·툴은 갖춤 / FOMO·격차</div></div>
+                  </div>
+                  <div class="stage-row">
+                    <span class="num">03</span>
+                    <div><div class="name">자유로운 실험형</div><div class="desc">권한이 열림 / 해방감·압박</div></div>
+                  </div>
+                  <div class="stage-row">
+                    <span class="num">04</span>
+                    <div><div class="name">AI 네이티브</div><div class="desc">사람+에이전트 / 자율성·책임감</div></div>
+                  </div>
+                </div>
+                <div class="footnote">
+                  <strong>가장 위험한 자리는 1단계가 아니라 2단계입니다.</strong>
+                  AI를 쓰고 있다는 사실만으로 앞서간다고 착각하기 쉽기 때문입니다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee strip -->
+    <section class="marquee-section">
+      <div style="display: flex; overflow: hidden;">
+        <div class="marquee">
+          <span>AI를 샀다고, AX가 되는 건 아닙니다</span><span class="dot">●</span>
+          <span>AI 적용도는 4단계로 갈립니다</span><span class="dot">●</span>
+          <span>AI는 균등하게 보급됐는데, 결과는 극단적으로 갈립니다</span><span class="dot">●</span>
+          <span>그래서, 귀사는 몇 단계입니까?</span><span class="dot">●</span>
+          <span>다음 단계를 함께 그려보세요</span><span class="dot">●</span>
+          <!-- duplicate for seamless loop -->
+          <span>AI를 샀다고, AX가 되는 건 아닙니다</span><span class="dot">●</span>
+          <span>AI 적용도는 4단계로 갈립니다</span><span class="dot">●</span>
+          <span>AI는 균등하게 보급됐는데, 결과는 극단적으로 갈립니다</span><span class="dot">●</span>
+          <span>그래서, 귀사는 몇 단계입니까?</span><span class="dot">●</span>
+          <span>다음 단계를 함께 그려보세요</span><span class="dot">●</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI 적용도 진단 -->
+    <section id="stages" class="section">
+      <div class="container">
+        <div class="section-head reveal" style="--index: 0">
+          <span class="eyebrow">
+            <iconify-icon icon="solar:layers-bold-duotone" width="14" height="14"></iconify-icon>
+            AI 적용도 진단
+          </span>
+          <h2 style="margin-top: 24px;">AI 적용도는 <span style="color: var(--accent);">4단계</span>로 갈립니다.</h2>
+          <p class="lead-after">
+            진짜 기준은 <strong>'AI를 얼마나 샀느냐'</strong>가 아니라 <strong>'업무 흐름이 얼마나 바뀌었느냐'</strong>입니다.
+            같은 매출, 같은 산업의 회사도 단계가 다릅니다.
+            단계마다 직원의 감정이 다르고, 조직의 증상이 다르며, 다음 단계로 가는 처방도 달라집니다.
+          </p>
+        </div>
+
+        <!-- Stage Transition Diagram -->
+        <div class="stage-flow reveal" style="--index: 1">
+          <div class="flow">
+            <div class="flow-node">
+              <div class="num">STAGE 01</div>
+              <div class="name">차단형</div>
+              <div class="emo">두려움</div>
+            </div>
+            <div class="flow-arrow"><iconify-icon icon="solar:arrow-right-linear" width="22" height="22"></iconify-icon></div>
+            <div class="flow-node danger">
+              <span class="danger-tag">현재 가장 흔함</span>
+              <div class="num">STAGE 02</div>
+              <div class="name">격차형</div>
+              <div class="emo">FOMO · 격차감</div>
+            </div>
+            <div class="flow-arrow"><iconify-icon icon="solar:arrow-right-linear" width="22" height="22"></iconify-icon></div>
+            <div class="flow-node">
+              <div class="num">STAGE 03</div>
+              <div class="name">실험형</div>
+              <div class="emo">해방감 · 압박</div>
+            </div>
+            <div class="flow-arrow"><iconify-icon icon="solar:arrow-right-linear" width="22" height="22"></iconify-icon></div>
+            <div class="flow-node">
+              <div class="num">STAGE 04</div>
+              <div class="name">네이티브</div>
+              <div class="emo">자율성 · 책임감</div>
+            </div>
+          </div>
+          <p class="caption">
+            대부분의 한국 기업이 <strong>1단계와 2단계 사이</strong>에 머물러 있습니다.
+            특히 2단계는 "AI는 쓰고 있다"는 인식 때문에 자기 진단이 가장 어려운 자리입니다.
+          </p>
+        </div>
+
+        <!-- 4 stage cards -->
+        <div class="stages-grid">
+          <article class="bezel reveal" style="--index: 0">
+            <div class="bezel-core stage-card">
+              <div class="row">
+                <span class="num-big">01</span>
+                <span class="tag">차단형</span>
+              </div>
+              <h3>완전 차단</h3>
+              <p>
+                고객정보·소스코드·계약서가 외부 AI에 들어가는 것이 두렵습니다.
+                사내 챗봇과 승인된 번역기 정도만 허용하고, ChatGPT·Claude·Cursor는 차단합니다.
+                그러나 직원은 이미 더 좋은 모델을 알고 있고, 집에서는 그것을 씁니다.
+                <strong>결과적으로 AI는 사라지지 않고, 회사의 시야 밖으로 이동합니다.</strong>
+              </p>
+              <dl class="meta-grid">
+                <dt>감정</dt>
+                <dd>두려움 · 통제</dd>
+                <dt>증상</dt>
+                <dd>섀도우 AI 확산</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="bezel reveal" style="--index: 1">
+            <div class="bezel-core stage-card dangerous">
+              <div class="row">
+                <span class="num-big">02</span>
+                <span class="tag">격차형 · 가장 위험</span>
+              </div>
+              <h3>활발하지만 격차가 큼</h3>
+              <p>
+                교육도 했고 툴도 깔았습니다. 부서별 활용 사례도 공유했습니다.
+                그런데도 누구는 보고서·앱 프로토타입까지 만들고, 누구는 회의록 요약에서 멈춥니다.
+                <strong>직원은 뛰기 시작했는데 회사의 도로 표지판은 아직 없는 상태입니다.</strong>
+                가장 흔한 단계이자, 격차가 가장 빠르게 벌어지는 단계입니다.
+              </p>
+              <dl class="meta-grid">
+                <dt>감정</dt>
+                <dd class="accent">FOMO · 격차감</dd>
+                <dt>증상</dt>
+                <dd>개인기 의존 · 책임 모호</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="bezel reveal" style="--index: 2">
+            <div class="bezel-core stage-card">
+              <div class="row">
+                <span class="num-big">03</span>
+                <span class="tag">실험형</span>
+              </div>
+              <h3>자유로운 실험</h3>
+              <p>
+                Claude Code, Cursor, ChatGPT Pro 같은 도구가 전사에 열립니다.
+                <strong>핵심은 툴이 아니라 권한의 허락입니다.</strong>
+                마케터의 프로토타입을 개발자가 바로 혼내지 않습니다.
+                대신 질문이 바뀝니다 — "고객 반응은 봤나요?", "데이터는 어디에 저장되나요?"
+              </p>
+              <dl class="meta-grid">
+                <dt>감정</dt>
+                <dd>해방감 · 압박감</dd>
+                <dt>증상</dt>
+                <dd>실행 문턱 낮아짐</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="bezel reveal" style="--index: 3">
+            <div class="bezel-core stage-card">
+              <div class="row">
+                <span class="num-big">04</span>
+                <span class="tag">네이티브</span>
+              </div>
+              <h3>AI 네이티브</h3>
+              <p>
+                업무의 기본 단위가 사람이 아니라 <strong>사람 + 에이전트 + 자동화 루프</strong>가 됩니다.
+                회의의 첫 질문이 바뀝니다.
+                "누가 할까요?"가 아니라 "어떤 에이전트가 초안을 만들고, 누가 승인하고, 어떤 지표가 자동으로 닫히나요?"
+              </p>
+              <dl class="meta-grid">
+                <dt>감정</dt>
+                <dd>자율성 · 책임감</dd>
+                <dt>증상</dt>
+                <dd>역할 = 시스템 설계</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+
+        <!-- Synthesis -->
+        <div class="synthesis-box reveal" style="--index: 0">
+          <p>
+            <strong>주의할 점은 1단계보다 2단계가 더 위험할 수 있다는 사실입니다.</strong>
+            1단계는 "우리는 막고 있다"는 메타인지가 있지만, 2단계는 모두가 AI를 쓰고 있어 앞서가고 있다고 착각하기 쉽습니다.
+            교육도 했고 툴도 깔았으니까요.
+            그러나 업무 프로세스, 책임 구조, 데이터 접근권, 검증 방식이 그대로라면 생산성은 결국 개인기에서 멈춥니다.
+          </p>
+        </div>
+
+        <!-- Comparison Matrix -->
+        <div style="margin-top: 56px;">
+          <div class="reveal" style="--index: 0">
+            <span class="eyebrow" style="margin-bottom: 18px;">
+              <iconify-icon icon="solar:square-academic-cap-bold-duotone" width="14" height="14"></iconify-icon>
+              한눈에 보는 단계별 차이
+            </span>
+            <h3 style="font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; margin-top: 14px; margin-bottom: 28px; line-height: 1.35;">
+              네 가지 축으로 본 4단계
+            </h3>
+          </div>
+          <div class="matrix-wrap reveal" style="--index: 1">
+            <div class="matrix">
+              <div class="matrix-header empty"></div>
+              <div class="matrix-header">1단계 차단</div>
+              <div class="matrix-header">2단계 격차</div>
+              <div class="matrix-header">3단계 실험</div>
+              <div class="matrix-header">4단계 네이티브</div>
+
+              <div class="row-label">AI 정책</div>
+              <div>전면 금지 · 사내 챗봇만</div>
+              <div class="danger-cell">권장 · 가이드 부재</div>
+              <div>권한 위임 · 가벼운 검토</div>
+              <div>자동화 OS · 명문화</div>
+
+              <div class="row-label">직원 감정</div>
+              <div>두려움 · 통제</div>
+              <div class="danger-cell">FOMO · 격차감</div>
+              <div>해방감 · 압박</div>
+              <div>자율성 · 책임감</div>
+
+              <div class="row-label">책임 구조</div>
+              <div>보안팀 중앙 집중</div>
+              <div class="danger-cell">모호 · 분산</div>
+              <div>분담 시작</div>
+              <div>명확한 owner</div>
+
+              <div class="row-label">조직의 결과</div>
+              <div>섀도우 AI</div>
+              <div class="danger-cell">개인기 의존</div>
+              <div>실험 자산화</div>
+              <div>시스템 자산화</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Insights -->
+    <section id="data" class="section" style="background: color-mix(in srgb, var(--ink) 3%, transparent);">
+      <div class="container">
+        <div class="section-head reveal" style="--index: 0">
+          <span class="eyebrow">
+            <iconify-icon icon="solar:chart-bold-duotone" width="14" height="14"></iconify-icon>
+            Key Insights
+          </span>
+          <h2 style="margin-top: 24px;">AI는 균등하게 보급됐는데,<br />결과는 극단적으로 갈립니다.</h2>
+          <p class="lead-after">
+            Gallup 조사가 보여주는 갭은 단순한 통계가 아닙니다.
+            <strong>같은 회사 안에서 'AI를 쓴다'와 '일하는 방식이 바뀌었다' 사이의 거리</strong>입니다.
+            그 거리에서 회사들이 갈라집니다.
+          </p>
+        </div>
+
+        <div class="bezel reveal" style="--index: 1">
+          <div class="bezel-core gallup-card">
+            <div class="gallup-head">
+              <div class="ico"><iconify-icon icon="solar:chart-bold" width="26" height="26"></iconify-icon></div>
+              <div>
+                <p class="meta">Gallup · AI in the Workplace</p>
+                <h3>같은 회사, '쓴다'와 '바뀌었다' 사이의 거리</h3>
+              </div>
+            </div>
+
+            <div class="gallup-grid">
+              <div>
+                <p class="gallup-label">AI 도입 직원 중 <strong>생산성이 올랐다</strong>고 응답한 비율</p>
+                <div style="display: flex; align-items: baseline; gap: 6px;">
+                  <span class="gallup-num">66</span>
+                  <span style="font-size: 32px; color: var(--muted); font-weight: 700;">%</span>
+                </div>
+                <div class="gallup-bar"><div class="gallup-fill" style="width: 66%; background: color-mix(in srgb, var(--ink) 50%, transparent);"></div></div>
+              </div>
+              <div>
+                <p class="gallup-label">"<strong>조직이 일하는 방식이 바뀌었다</strong>"에 강하게 동의한 비율</p>
+                <div style="display: flex; align-items: baseline; gap: 6px;">
+                  <span class="gallup-num accent">12</span>
+                  <span style="font-size: 32px; color: var(--accent); font-weight: 700;">%</span>
+                </div>
+                <div class="gallup-bar"><div class="gallup-fill" style="width: 12%; background: var(--accent);"></div></div>
+              </div>
+            </div>
+
+            <div class="gallup-source">
+              <span class="src-label">Source</span>
+              <span>
+                <strong>Gallup</strong> · AI in the Workplace 분기 조사 (2025) · 미국 정규직 근로자 대상
+                <a href="https://www.gallup.com/workplace/701195/frequent-workplace-continued-rise.aspx" target="_blank" rel="noopener noreferrer">
+                  gallup.com/workplace
+                  <iconify-icon icon="solar:arrow-right-up-linear" width="11" height="11" style="vertical-align: -1px;"></iconify-icon>
+                </a>
+              </span>
+            </div>
+
+            <div class="gallup-callout">
+              <p>
+                많은 회사에서 AI는 아직 <strong>기존 업무 위에 얹힌 속도 부스터</strong>일 뿐입니다.
+                회의록을 빨리 요약해주는 도구는 됐지만, 회의 자체를 줄이는 변화는 아직 일어나지 않았습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cases-grid">
+          <article class="bezel reveal" style="--index: 0">
+            <div class="bezel-core case-card">
+              <div class="case-head">
+                <div class="case-ico"><iconify-icon icon="solar:rocket-2-bold" width="22" height="22"></iconify-icon></div>
+                <div>
+                  <p class="meta">Case · Lovable</p>
+                  <h3>8개월 만의 ARR 1억 달러</h3>
+                </div>
+              </div>
+              <p>
+                AI로 누구나 앱을 만들게 해주는 회사입니다.
+                출시 8개월 만에 반복 매출 1억 달러를 돌파했고, 당시 직원은 45명이었습니다.
+                <strong>수십 명이 수백억대 매출을 만드는 구조</strong>가 가능해졌다는 신호입니다.
+              </p>
+              <div class="case-stats">
+                <div class="case-stat"><div class="l">출시 후</div><div class="v">8개월</div></div>
+                <div class="case-stat"><div class="l">정규직</div><div class="v">45명</div></div>
+                <div class="case-stat accent"><div class="l">ARR</div><div class="v">$1억</div></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="bezel reveal" style="--index: 1">
+            <div class="bezel-core case-card">
+              <div class="case-head">
+                <div class="case-ico"><iconify-icon icon="solar:code-square-bold" width="22" height="22"></iconify-icon></div>
+                <div>
+                  <p class="meta">Case · Cursor (Anysphere)</p>
+                  <h3>기업가치 99억 달러 평가</h3>
+                </div>
+              </div>
+              <p>
+                AI 코드 에디터입니다. 2025년 ARR 5억 달러, 기업가치 99억 달러로 평가됐습니다.
+                개발자라는 직군 자체가 진화하고 있다는 증거입니다 —
+                <strong>같은 도구를 써도 숙련된 개발자는 바이브코더와 완전히 다르게 움직입니다.</strong>
+              </p>
+              <div class="case-stats">
+                <div class="case-stat"><div class="l">ARR (2025)</div><div class="v">$5억</div></div>
+                <div class="case-stat accent"><div class="l">기업가치</div><div class="v">$99억</div></div>
+                <div class="case-stat"><div class="l">제품</div><div class="v" style="font-size: 13px; line-height: 1.3;">AI 코드<br />에디터</div></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Voices from the field -->
+        <div class="reveal" style="--index: 0; margin-top: 64px;">
+          <span class="eyebrow" style="margin-bottom: 14px;">
+            <iconify-icon icon="solar:chat-square-like-bold-duotone" width="14" height="14"></iconify-icon>
+            현장의 목소리
+          </span>
+          <h3 style="font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; margin-top: 14px; line-height: 1.35;">
+            업계 전문가와 현장 사용자가 말하는 변화
+          </h3>
+        </div>
+
+        <div class="voices-grid">
+          <div class="bezel reveal" style="--index: 0">
+            <div class="bezel-core voice-card">
+              <blockquote>
+                회사 안에는 이미 AI를 몰래 쓰는 비밀 사이보그(Secret Cyborgs)들이 있습니다. 그들을 막을 게 아니라 드러나게 만들어야 합니다.
+              </blockquote>
+              <div class="attr">
+                <div class="ic"><iconify-icon icon="solar:user-bold" width="18" height="18"></iconify-icon></div>
+                <div>
+                  <div class="name">Ethan Mollick</div>
+                  <div class="role">Wharton 교수 · "Detecting the Secret Cyborgs"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bezel reveal" style="--index: 1">
+            <div class="bezel-core voice-card">
+              <blockquote>
+                개발자의 일은 사라지는 게 아니라 진화하고 있습니다. 같은 Claude를 써도 숙련된 개발자는 바이브코더와 완전히 다르게 움직입니다.
+              </blockquote>
+              <div class="attr">
+                <div class="ic"><iconify-icon icon="solar:code-bold" width="18" height="18"></iconify-icon></div>
+                <div>
+                  <div class="name">14년차 풀스택 개발자</div>
+                  <div class="role">Reddit r/ClaudeAI, Claude Code 워크플로 스레드</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bezel reveal" style="--index: 2">
+            <div class="bezel-core voice-card">
+              <blockquote>
+                전사 거대 프로젝트로 시작하지 마세요. 6~12주 안에 효과를 확인할 수 있는 작은 AX 파일럿을 먼저 고르세요.
+              </blockquote>
+              <div class="attr">
+                <div class="ic"><iconify-icon icon="solar:lightbulb-bolt-bold" width="18" height="18"></iconify-icon></div>
+                <div>
+                  <div class="name">Andrew Ng</div>
+                  <div class="role">"AI Transformation Playbook"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 시사점 -->
+    <section id="implication" class="impl-section">
+      <div class="container">
+        <div class="impl-grid">
+          <div class="reveal sticky-block" style="--index: 0">
+            <span class="eyebrow on-dark">
+              <iconify-icon icon="solar:target-bold-duotone" width="14" height="14"></iconify-icon>
+              시사점
+            </span>
+            <h2 style="margin-top: 24px;">
+              그래서, 귀사는<br /><span class="accent">몇 단계</span>입니까?
+            </h2>
+            <p>
+              지금 던져야 할 질문은 단 하나입니다 — 우리 조직은 1, 2, 3, 4단계 중 어디인가.
+              그리고 다음 단계로 넘어가기 위해 무엇이 필요한가.
+              아래는 흔한 오해와, 그 자리에서 진짜 해야 할 일의 차이입니다.
+            </p>
+          </div>
+
+          <div class="impl-cards">
+            <div class="reveal impl-card" style="--index: 1">
+              <div class="body">
+                <div>
+                  <span class="num">1</span>
+                  <p class="num-meta">Re-design</p>
+                </div>
+                <div>
+                  <h4>회의록을 빠르게 요약하는 것이 아니라, 회의 자체를 줄이는 것</h4>
+                  <p>AI에게 회의록 정리를 시키면 회의는 줄지 않습니다. 반복되는 의사결정 회의의 90%를 비동기 문서·자동 알림으로 옮긴 뒤에야 회의는 줄어듭니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="reveal impl-card" style="--index: 2">
+              <div class="body">
+                <div>
+                  <span class="num">2</span>
+                  <p class="num-meta">Re-design</p>
+                </div>
+                <div>
+                  <h4>보고서를 빠르게 쓰는 것이 아니라, 보고가 필요한 지표를 자동으로 흐르게 하는 것</h4>
+                  <p>AI가 보고서 초안을 써준다고 보고 문화가 바뀌지는 않습니다. 대시보드와 알림으로 지표가 흘러야 보고는 줄어듭니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="reveal impl-card" style="--index: 3">
+              <div class="body">
+                <div>
+                  <span class="num">3</span>
+                  <p class="num-meta">Re-design</p>
+                </div>
+                <div>
+                  <h4>코드를 빠르게 치는 것이 아니라, 기획-프로토타입-리뷰-배포 루프를 다시 짜는 것</h4>
+                  <p>Claude Code·Cursor가 코딩 속도를 올려도, 비개발자의 프로토타입과 정식 제품의 경계가 없으면 결국 개발팀의 부담이 됩니다. 루프 자체를 다시 그려야 합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="reveal impl-card danger" style="--index: 4">
+              <div class="body">
+                <div>
+                  <span class="num">4</span>
+                  <p class="num-meta">Re-design</p>
+                </div>
+                <div>
+                  <h4>고객센터 답변을 자동화하는 것이 아니라, 고객 문제가 생기는 원인을 제품과 운영에서 줄이는 것</h4>
+                  <p>AI 챗봇이 답변을 빨리 해줘도, 같은 문의가 반복되면 문제는 그대로입니다. 문의 패턴을 제품·운영에 환류시켜야 진짜 변화입니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="reveal impl-final" style="--index: 5">
+              <p class="lead-line">AI 네이티브 회사는, 사람이 필요 없는 회사가 아닙니다.</p>
+              <p class="punch-line">사람이 <em>시스템 설계자</em>가 되는 회사입니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 연락처 -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="bezel reveal" style="--index: 0">
+          <div class="bezel-core contact-card">
+            <div class="contact-grid">
+              <div>
+                <span class="eyebrow">
+                  <iconify-icon icon="solar:phone-calling-bold-duotone" width="14" height="14"></iconify-icon>
+                  연락처
+                </span>
+                <h2 style="margin-top: 24px;">다음 단계를<br />함께 그려보세요.</h2>
+                <p class="lead-after">
+                  현재 단계의 진단부터, 다음 단계로 이동하기 위한 실행 로드맵까지.
+                  모두의연구소 KHP팀이 귀사의 AX 여정을 함께 설계하겠습니다.
+                </p>
+
+                <div class="contact-person">
+                  <div class="ic"><iconify-icon icon="solar:user-id-bold" width="28" height="28"></iconify-icon></div>
+                  <div>
+                    <p class="meta">담당</p>
+                    <h3>모두의연구소 KHP팀 김은주 팀장</h3>
+                  </div>
+                </div>
+
+                <div class="contact-channels">
+                  <a href="mailto:kej@modulabs.co.kr" class="contact-channel smooth">
+                    <div class="ic"><iconify-icon icon="solar:letter-linear" width="20" height="20"></iconify-icon></div>
+                    <div style="min-width: 0;">
+                      <div class="l">Email</div>
+                      <div class="v" style="overflow: hidden; text-overflow: ellipsis;">kej@modulabs.co.kr</div>
+                    </div>
+                  </a>
+                  <a href="tel:+821074761828" class="contact-channel smooth">
+                    <div class="ic"><iconify-icon icon="solar:phone-linear" width="20" height="20"></iconify-icon></div>
+                    <div>
+                      <div class="l">Mobile</div>
+                      <div class="v">010-7476-1828</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-mark">
+                <iconify-icon icon="solar:bolt-circle-bold" width="72" height="72"></iconify-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-row">
+          <div class="who">모두의연구소 KHP팀 김은주 팀장 · kej@modulabs.co.kr · 010-7476-1828</div>
+          <div class="tag">AI는 도구가 아니라, 변화의 시작입니다. AX로 당신의 조직을 혁신하세요.</div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Mobile menu
+    const btn = document.getElementById('menuButton');
+    const panel = document.getElementById('mobileMenu');
+    if (btn && panel) {
+      btn.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      panel.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', () => {
+          panel.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    // Animate gallup bars when in view
+    const barIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const fills = entry.target.querySelectorAll('.gallup-fill');
+          fills.forEach((f) => {
+            const w = f.style.width;
+            f.style.width = '0%';
+            requestAnimationFrame(() => requestAnimationFrame(() => (f.style.width = w)));
+          });
+          barIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('#data').forEach((el) => barIO.observe(el));
+  </script>
+
+</body>
+</html>
