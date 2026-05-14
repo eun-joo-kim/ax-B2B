@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>디자인씽킹 AI 워크숍 — AI를 업무에 입히다</title>
+  <meta name="description" content="디자인씽킹 5단계로 내 업무의 비효율을 진단하고 AI로 해결 도구까지 만들어 보는 5시간 핸즈온 워크숍." />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+
+<style>
+    :root {
+      --base: #F8F5FA;
+      --panel: #FFFFFF;
+      --ink: #1A1238;
+      --muted: #6E6979;
+      --accent: #6366F1;
+      --accent-deep: #4338CA;
+      --soft: #E0E7FF;
+      --soft-strong: #C7D2FE;
+      --line: rgba(26, 18, 56, 0.1);
+      --line-strong: rgba(26, 18, 56, 0.18);
+      --shadow-card: 0 22px 70px -46px rgba(67, 56, 202, 0.4);
+      --shadow-amber: 0 24px 80px -34px rgba(99, 102, 241, 0.42);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--base); }
+    body {
+      font-family: 'Pretendard', 'Geist', system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(99, 102, 241, 0.14), transparent 24rem),
+        radial-gradient(circle at 92% 12%, rgba(167, 139, 250, 0.12), transparent 22rem),
+        linear-gradient(135deg, rgba(26, 18, 56, 0.04) 0 1px, transparent 1px 42px),
+        var(--base);
+      color: var(--ink);
+      word-break: keep-all;
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    .smooth { transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    .reveal { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+    .reveal.is-visible {
+      animation: fadeInUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--index, 0) * 80ms);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes floatPanel {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .reveal.is-visible { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
+      .hero-card { animation: none !important; }
+    }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 768px) { .container { padding: 0 32px; } }
+
+    /* Glass pill nav */
+    .nav-shell {
+      position: fixed;
+      inset-inline: 0;
+      top: 16px;
+      z-index: 40;
+      padding: 0 16px;
+    }
+    .glass-nav {
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: color-mix(in srgb, var(--panel) 82%, transparent);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px -34px rgba(67, 56, 202, 0.35), inset 0 1px 0 rgba(255,255,255,0.9);
+      max-width: 1180px;
+      margin: 0 auto;
+      border-radius: 999px;
+      padding: 10px 14px 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .nav-logo .dot {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+    }
+    .nav-links { display: flex; gap: 26px; font-size: 13px; font-weight: 500; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-back {
+      font-size: 12px; font-weight: 700; color: var(--accent);
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      flex-shrink: 0;
+    }
+    .nav-back:hover { background: var(--soft-strong); }
+    .nav-mobile-btn {
+      display: flex; width: 38px; height: 38px;
+      align-items: center; justify-content: center;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      color: var(--ink); cursor: pointer; border: none;
+    }
+    @media (min-width: 880px) { .nav-mobile-btn { display: none; } }
+    @media (max-width: 879px) { .nav-links { display: none; } .nav-logo { font-size: 12px; } }
+
+    .mobile-panel {
+      transform: translateY(-12px); opacity: 0; pointer-events: none;
+      max-width: 1180px; margin: 8px auto 0;
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--panel) 96%, transparent);
+      border: 1px solid var(--line); padding: 16px;
+      box-shadow: var(--shadow-amber);
+    }
+    .mobile-panel.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .mobile-panel a {
+      display: block; padding: 12px 16px;
+      border-radius: 14px; font-size: 14px; font-weight: 600; color: var(--ink);
+    }
+    .mobile-panel a:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+    @media (min-width: 880px) { .mobile-panel { display: none; } }
+
+    /* Bezel system */
+    .bezel {
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      border: 1px solid var(--line);
+      padding: 6px;
+      border-radius: 28px;
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.92);
+    }
+    .bezel-core {
+      border-radius: 22px;
+      background: linear-gradient(145deg, var(--panel), color-mix(in srgb, var(--panel) 88%, var(--soft)));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.9);
+    }
+    .bezel-dark { background: var(--ink); border: 1px solid rgba(255,255,255,0.08); padding: 6px; border-radius: 28px; }
+    .bezel-dark > .bezel-core { background: var(--ink); color: var(--panel); }
+
+    /* Eyebrow chip */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--accent); padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+    .eyebrow.on-dark {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.16);
+      color: var(--soft);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 130px 0 72px;
+      display: flex; align-items: center;
+    }
+    @media (min-width: 768px) { .hero { padding: 160px 0 96px; } }
+    .hero-grid { display: grid; gap: 48px; grid-template-columns: 1fr; }
+    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1.05fr 0.95fr; align-items: center; } }
+    .hero h1 {
+      font-size: 36px; font-weight: 800; line-height: 1.2;
+      letter-spacing: -0.015em; color: var(--ink);
+      margin-top: 24px; margin-bottom: 24px;
+    }
+    @media (min-width: 640px) { .hero h1 { font-size: 44px; } }
+    @media (min-width: 1024px) { .hero h1 { font-size: 50px; } }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p.lead {
+      font-size: 16px; line-height: 1.8; color: var(--muted); max-width: 560px;
+    }
+    @media (min-width: 1024px) { .hero p.lead { font-size: 18px; } }
+    .hero p.lead strong { color: var(--ink); font-weight: 600; }
+    .hero-card { animation: floatPanel 7s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+    @media (max-width: 1023px) { .hero-card { animation: none; } }
+
+    .meta-card { padding: 28px; }
+    @media (min-width: 768px) { .meta-card { padding: 32px; } }
+    .meta-card .head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 22px; border-bottom: 1px solid var(--line);
+    }
+    .meta-card .head .meta {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    }
+    .meta-card .head h2 {
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      margin-top: 6px; letter-spacing: -0.01em;
+    }
+    .meta-card .head .ico {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      background: var(--accent); color: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-amber);
+    }
+    .meta-card .rows { display: grid; gap: 8px; padding: 22px 0 0; }
+    .meta-row {
+      display: grid; grid-template-columns: 96px 1fr;
+      gap: 14px; padding: 14px 16px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      align-items: baseline;
+    }
+    .meta-row dt {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    }
+    .meta-row dd { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.005em; }
+    .meta-row dd .accent { color: var(--accent); }
+
+    /* Section base */
+    .section { padding: 88px 0; }
+    @media (min-width: 768px) { .section { padding: 110px 0; } }
+    .section-head { max-width: 800px; margin-bottom: 48px; }
+    .section-head .eyebrow { margin-bottom: 24px; }
+    .section h2 {
+      font-size: 30px; font-weight: 800; letter-spacing: -0.012em;
+      color: var(--ink); line-height: 1.22;
+    }
+    @media (min-width: 768px) { .section h2 { font-size: 38px; } }
+    @media (min-width: 1024px) { .section h2 { font-size: 44px; } }
+    .section .lead-after {
+      max-width: 680px; margin-top: 20px;
+      font-size: 16px; line-height: 1.78; color: var(--muted);
+    }
+    @media (min-width: 1024px) { .section .lead-after { font-size: 18px; } }
+    .section .lead-after strong { color: var(--ink); font-weight: 600; }
+    .section h2 .accent { color: var(--accent); }
+
+    /* Context / Two-Track 카드 */
+    .ctx-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 880px) { .ctx-grid { grid-template-columns: repeat(3, 1fr); } }
+    .ctx-card { padding: 32px 28px; height: 100%; }
+    @media (min-width: 768px) { .ctx-card { padding: 36px 32px; } }
+    .ctx-card .ctx-tag {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      color: var(--accent); background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      display: inline-block; margin-bottom: 22px;
+    }
+    .ctx-card.dark .ctx-tag {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.18);
+      color: var(--soft);
+    }
+    .ctx-card h3 {
+      font-size: 20px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.01em; line-height: 1.35; margin-bottom: 14px;
+    }
+    .ctx-card.dark h3 { color: var(--panel); }
+    .ctx-card p { font-size: 15px; color: var(--muted); line-height: 1.78; }
+    @media (min-width: 768px) { .ctx-card p { font-size: 15.5px; } }
+    .ctx-card.dark p { color: rgba(255,255,255,0.62); }
+
+    /* Solution — goal banner */
+    .sol-goal {
+      margin-bottom: 24px;
+      padding: 32px 36px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, var(--ink), color-mix(in srgb, var(--ink) 86%, var(--accent)));
+      color: var(--panel);
+      display: grid; gap: 18px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .sol-goal { grid-template-columns: auto 1fr; align-items: start; gap: 28px; } }
+    .sol-goal .goal-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--soft);
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      align-self: start; justify-self: start;
+    }
+    .sol-goal p { font-size: 15.5px; line-height: 1.78; color: rgba(255,255,255,0.88); font-weight: 500; }
+    .sol-goal p + p { margin-top: 12px; }
+    .sol-goal p strong { color: var(--panel); font-weight: 700; }
+
+    /* "왜 이 강사" 카드 */
+    .why-instructor {
+      margin-bottom: 24px; padding: 32px 32px;
+      display: grid; gap: 20px; grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .why-instructor { grid-template-columns: 200px 1fr; gap: 32px; padding: 36px 40px; } }
+    .why-instructor .who-block { }
+    .why-instructor .who-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px; display: block;
+    }
+    .why-instructor .who-name { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.3; }
+    .why-instructor .who-role { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.65; }
+    .why-instructor .why-body h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .why-instructor .why-body p { font-size: 15px; color: var(--muted); line-height: 1.78; }
+    .why-instructor .why-body p strong { color: var(--ink); font-weight: 600; }
+
+    /* 커리큘럼 step 카드 */
+    .track-steps { display: flex; flex-direction: column; gap: 10px; }
+    .track-step {
+      display: grid; grid-template-columns: 28px 1fr;
+      gap: 14px; align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ink) 3%, transparent);
+      border: 1px solid var(--line);
+    }
+    .track-step .num {
+      font-family: 'Geist', sans-serif;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--accent); color: var(--panel);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .track-step .desc { font-size: 14px; color: var(--ink); line-height: 1.65; padding-top: 3px; }
+    .track-step .desc strong { font-weight: 700; }
+    .track-step .desc .t { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 700; color: var(--muted); margin-left: 6px; }
+
+    /* KPI */
+    .kpi-row { display:flex; flex-wrap:wrap; gap:12px; margin: 0 0 28px; }
+    .kpi { flex:1 1 150px; padding:20px 22px; border-radius:18px; background:color-mix(in srgb, var(--ink) 4%, transparent); border: 1px solid var(--line); }
+    .kpi .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-.02em; font-family:'Geist',sans-serif; }
+    .kpi .lbl { font-size:12px; font-weight:600; color:var(--muted); margin-top:4px; line-height: 1.5; }
+
+    /* Outcome 카드 */
+    .outcomes-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .outcomes-grid { grid-template-columns: 1fr 1fr; } }
+    .outcome-card { padding: 30px 28px; height: 100%; }
+    .outcome-card.first { background: var(--ink); color: var(--panel); }
+    .outcome-card .check {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .outcome-card .check::before {
+      content: '✓'; width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent); color: var(--panel);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .outcome-card.first .check { color: var(--soft); }
+    .outcome-card h3 { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; margin-bottom: 10px; }
+    .outcome-card.first h3 { color: var(--panel); }
+    .outcome-card p { font-size: 14px; color: var(--muted); line-height: 1.78; }
+    .outcome-card.first p { color: rgba(255,255,255,0.7); }
+
+    /* Quote + recap */
+    .quote-box {
+      margin-top: 28px; padding: 24px 28px;
+      border-left: 3px solid var(--soft-strong);
+      background: color-mix(in srgb, var(--accent) 5%, transparent);
+      border-radius: 0 16px 16px 0;
+    }
+    .quote-box p { font-size: 15px; color: var(--ink); font-style: italic; line-height: 1.7; }
+    .quote-box p + p { margin-top: 10px; }
+    .recap-line { margin-top: 18px; font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+
+    /* Gallery / WS cards */
+    .ws-grid { display: grid; gap: 16px; grid-template-columns: 1fr; margin-top: 16px; }
+    @media (min-width: 768px) { .ws-grid { grid-template-columns: repeat(2, 1fr); } }
+    .ws-card { padding: 0; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
+    .ws-img {
+      width: 100%; height: 260px; background: var(--soft);
+      border-bottom: 1px solid var(--line); overflow: hidden;
+    }
+    .ws-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    @media (max-width: 767px) { .ws-img { height: 220px; } }
+    .ws-cap { padding: 20px 24px 22px; }
+    .ws-cap .tag {
+      display: inline-block; font-size: 10px; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .ws-cap h4 { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -0.005em; line-height: 1.4; }
+    .ws-cap p { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+
+    .gallery-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1024px) { .gallery-grid { grid-template-columns: repeat(5, 1fr); } }
+    .gallery-card { padding: 0; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
+    .gallery-img {
+      width: 100%; height: 260px; background: var(--soft);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .gallery-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    @media (max-width: 767px) { .gallery-img { height: 320px; } }
+    .gallery-cap { padding: 18px 20px 20px; }
+    .gallery-cap .day {
+      display: inline-block;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .gallery-cap h4 { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -0.005em; line-height: 1.4; }
+    .gallery-cap p { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+
+    /* Part label / title */
+    .part-label {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent);
+      margin: 48px 0 16px;
+    }
+    .part-label::before {
+      content: ''; width: 36px; height: 1px; background: var(--accent);
+    }
+    .part-title {
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.012em; margin-bottom: 28px;
+      line-height: 1.3;
+    }
+    @media (min-width: 768px) { .part-title { font-size: 26px; } }
+
+    /* Highlight / report link box */
+    .report-box {
+      margin-top: 28px; padding: 24px 28px;
+      display: grid; gap: 16px; grid-template-columns: 1fr;
+      border-radius: 20px;
+      background: linear-gradient(145deg, var(--ink), color-mix(in srgb, var(--ink) 86%, var(--accent)));
+      color: var(--panel);
+      align-items: center;
+    }
+    @media (min-width: 640px) { .report-box { grid-template-columns: 1fr auto; gap: 24px; } }
+    .report-box .rb-text { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.7; }
+    .report-box .rb-text strong { color: var(--panel); font-weight: 700; }
+    .report-box .rb-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 800; letter-spacing: 0.02em;
+      color: var(--ink); background: var(--panel);
+      padding: 12px 20px; border-radius: 999px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .report-box .rb-btn:hover { background: var(--soft); }
+
+    .bridge {
+      max-width: 720px; margin: 48px auto 0;
+      text-align: center;
+      font-size: 14px; color: var(--muted); font-style: italic;
+      padding: 0 24px;
+    }
+    .bridge::before { content: '— '; opacity: 0.5; }
+    .bridge::after { content: ' —'; opacity: 0.5; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line); padding: 64px 0 56px; margin-top: 48px;
+    }
+    .footer-row {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: flex-end; gap: 16px;
+    }
+    .footer-row .who { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .footer-row .who span { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 6px; letter-spacing: 0.04em; }
+    .footer-row .top-link {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    /* Goal grid (#solution 운영 목적) */
+    .goal-grid {
+      display: grid; gap: 16px; grid-template-columns: 1fr;
+      margin-bottom: 56px;
+    }
+    @media (min-width: 768px) { .goal-grid { grid-template-columns: 1fr 1fr; } }
+    .goal-card { padding: 36px 32px; height: 100%; display: flex; flex-direction: column; gap: 12px; }
+    @media (min-width: 768px) { .goal-card { padding: 40px 36px; } }
+    .goal-card .goal-no {
+      font-family: 'Geist', sans-serif;
+      font-size: 11px; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+      align-self: flex-start;
+      padding: 5px 12px; border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+    .goal-card.dark .goal-no {
+      color: var(--soft); background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .goal-card .goal-title {
+      font-size: 24px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.012em; line-height: 1.3;
+      margin-top: 4px;
+    }
+    @media (min-width: 768px) { .goal-card .goal-title { font-size: 28px; } }
+    .goal-card.dark .goal-title { color: var(--panel); }
+    .goal-card p { font-size: 15px; color: var(--muted); line-height: 1.78; }
+    @media (min-width: 768px) { .goal-card p { font-size: 16px; } }
+    .goal-card.dark p { color: rgba(255,255,255,0.7); }
+    .goal-card p strong { color: var(--ink); font-weight: 700; }
+    .goal-card.dark p strong { color: var(--panel); }
+
+    /* Excerpt grid (#artifacts 결과물 발췌) */
+    .excerpt-grid {
+      display: grid; gap: 18px; grid-template-columns: 1fr;
+      margin-top: 4px;
+    }
+    @media (min-width: 768px) { .excerpt-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1100px) { .excerpt-grid { grid-template-columns: repeat(4, 1fr); } }
+    .excerpt-card {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 18px; margin: 0;
+      border-radius: 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-card);
+    }
+    .excerpt-card .excerpt-step {
+      font-family: 'Geist', sans-serif;
+      font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .excerpt-card .excerpt-img {
+      width: 100%; aspect-ratio: 4/3; overflow: hidden;
+      border-radius: 12px; border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .excerpt-card .excerpt-img img {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+    }
+    .excerpt-card figcaption {
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+    }
+
+    /* Hero subtitle */
+    .hero-subtitle {
+      font-size: 22px; font-weight: 700; color: var(--accent);
+      letter-spacing: -0.005em; line-height: 1.3;
+      margin: -8px 0 22px;
+    }
+    @media (min-width: 768px) { .hero-subtitle { font-size: 26px; } }
+
+    /* Audience box (#context) */
+    .audience-box { padding: 26px 30px; }
+    @media (min-width: 768px) { .audience-box { padding: 30px 36px; } }
+    .audience-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); padding: 5px 12px; border-radius: 999px;
+      background: var(--soft);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      margin-bottom: 18px;
+    }
+    .audience-list { list-style: none; display: grid; gap: 10px; }
+    .audience-list li {
+      position: relative; padding-left: 22px;
+      font-size: 14.5px; line-height: 1.78; color: var(--muted);
+    }
+    .audience-list li::before {
+      content: ''; position: absolute; left: 6px; top: 11px;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    }
+    .audience-list li strong { color: var(--ink); font-weight: 700; }
+
+    /* Team result cards (#artifacts top 5) */
+    .team-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 880px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    .team-grid > div:last-child { grid-column: 1 / -1; }
+    .team-card { padding: 28px 26px 26px; height: 100%; display: flex; flex-direction: column; gap: 14px; }
+    @media (min-width: 768px) { .team-card { padding: 30px 30px 28px; } }
+    .team-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .team-no {
+      font-family: 'Geist', sans-serif;
+      display: inline-flex; align-items: center;
+      font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
+      color: var(--panel); background: var(--accent);
+      padding: 5px 12px; border-radius: 999px;
+      box-shadow: var(--shadow-amber);
+    }
+    .team-domain {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .team-title {
+      font-size: 17px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.008em; line-height: 1.4;
+    }
+    @media (min-width: 768px) { .team-title { font-size: 18px; } }
+    .team-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+    .team-chip {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      color: var(--accent-deep); background: var(--soft);
+      padding: 4px 10px; border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .team-block { display: flex; flex-direction: column; gap: 6px; }
+    .team-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .team-steps { list-style: none; display: grid; gap: 4px; padding-left: 2px; }
+    .team-steps li { font-size: 13px; color: var(--ink); line-height: 1.65; }
+    .team-steps li strong { font-weight: 700; }
+    .team-rule {
+      font-size: 12.5px; line-height: 1.65; color: var(--ink);
+      padding: 10px 14px;
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      font-family: 'Geist', 'Pretendard', sans-serif;
+    }
+    .team-rule + .team-rule { margin-top: 6px; }
+    .team-rule strong { color: var(--accent-deep); font-weight: 800; }
+    .team-rule em { color: var(--muted); font-style: normal; font-size: 11.5px; }
+    .team-kpi {
+      font-size: 13.5px; line-height: 1.7; color: var(--ink);
+      padding: 12px 14px;
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    .team-kpi strong { color: var(--accent-deep); font-weight: 800; }
+    .team-retro {
+      font-size: 13px; color: var(--muted); line-height: 1.7; font-style: italic;
+    }
+    .team-retro strong { color: var(--ink); font-weight: 700; font-style: normal; }
+    .team-meaning {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px dashed var(--line);
+      font-size: 12.5px; color: var(--muted); line-height: 1.65;
+    }
+    .team-meaning strong { color: var(--ink); font-weight: 700; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Pill Nav -->
+  <div class="nav-shell">
+    <nav class="glass-nav" id="nav" aria-label="주요 메뉴">
+      <a href="#top" class="nav-logo">
+        <span class="dot"><iconify-icon icon="ph:lightbulb-filament-bold" width="18" height="18"></iconify-icon></span>
+        <span>디자인씽킹 AI 워크숍</span>
+      </a>
+      <div class="nav-links">
+        <a href="#context" class="smooth">배경</a>
+        <a href="#solution" class="smooth">설계</a>
+        <a href="#outcomes" class="smooth">성과</a>
+        <a href="#artifacts" class="smooth">결과물</a>
+      </div>
+      <button id="menuButton" class="nav-mobile-btn" aria-label="메뉴 열기" aria-expanded="false">
+        <iconify-icon icon="solar:hamburger-menu-linear" width="20" height="20"></iconify-icon>
+      </button>
+    </nav>
+    <div id="mobileMenu" class="mobile-panel smooth">
+      <a href="#context">배경</a>
+      <a href="#solution">설계</a>
+      <a href="#outcomes">성과</a>
+      <a href="#artifacts">결과물</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-text reveal" style="--index:0">
+            <span class="eyebrow">기업 DT 워크숍</span>
+            <h1>디자인씽킹 <span class="accent">AI 워크숍</span></h1>
+            <p class="hero-subtitle">AI를 업무에 입히다</p>
+            <p class="lead">내 업무의 비효율을 진단하고, AI로 해결 도구까지 만들어 보는 핸즈온. <strong>'문제 정의–솔루션 설계–프로토타이핑'</strong>의 디자인씽킹 사이클을 압축적으로 경험합니다.</p>
+          </div>
+          <div class="hero-card reveal" style="--index:1">
+            <div class="bezel">
+              <div class="bezel-core meta-card">
+                <div class="head">
+                  <div>
+                    <div class="meta">WORKSHOP AT A GLANCE</div>
+                    <h2>운영 개요</h2>
+                  </div>
+                  <div class="ico"><iconify-icon icon="ph:lightbulb-filament-bold" width="24" height="24"></iconify-icon></div>
+                </div>
+                <dl class="rows">
+                  <div class="meta-row"><dt>소요 시간</dt><dd>5시간</dd></div>
+                  <div class="meta-row"><dt>방식</dt><dd>핸즈온</dd></div>
+                  <div class="meta-row"><dt>대상</dt><dd>전 직무군</dd></div>
+                  <div class="meta-row"><dt>결과물</dt><dd><span class="accent">AI 업무 자동화 계획서</span></dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- #context -->
+    <section class="section" id="context">
+      <div class="container">
+        <div class="section-head reveal" style="--index:0">
+          <span class="eyebrow">배경 · 왜 이 교육이 필요했나</span>
+          <h2>"AI를 써보고 싶은데, 내 업무 <span class="accent">어디에 어떻게</span> 적용해야 할지 막막해요"</h2>
+          <p class="lead-after">업무 혁신의 필요성은 느끼지만 어디서부터 손대야 할지 막막한 분들을 위한 워크숍입니다.</p>
+        </div>
+
+        <div class="reveal" style="--index:1; margin-bottom:24px;">
+          <div class="bezel"><div class="bezel-core audience-box">
+            <span class="audience-tag">참여 대상 · 이런 분들을 대상으로 설계했습니다</span>
+            <ul class="audience-list">
+              <li><strong>디지털 전환으로 업무 혁신을 실현하고 싶은</strong> 모든 직급의 임직원</li>
+              <li>막연한 업무 고충을 <strong>데이터로 분석</strong>하고, 해결을 위한 <strong>AI 앱을 직접 제작</strong>하고 싶은 실무자</li>
+              <li>조직 내 <strong>페인포인트를 선제적으로 발굴</strong>해 디지털 솔루션으로 풀어내고자 하는 <strong>혁신 인재</strong></li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="ctx-grid">
+          <div class="reveal" style="--index:1">
+            <div class="bezel"><div class="bezel-core ctx-card">
+              <span class="ctx-tag">Pain 01</span>
+              <h3>혁신은 원하는데, 시작점을 모른다</h3>
+              <p>"업무를 바꿔보자"는 의지는 있지만, 무엇부터 손대야 할지, 어떤 도구를 어떻게 써야 할지 막막합니다. 방법론 강의만 듣고 끝나면 정작 현장으로는 이어지지 않습니다.</p>
+            </div></div>
+          </div>
+          <div class="reveal" style="--index:2">
+            <div class="bezel"><div class="bezel-core ctx-card">
+              <span class="ctx-tag">Pain 02</span>
+              <h3>반복 루틴이 생산성을 갉아먹는다</h3>
+              <p>대부분의 직무에는 매일 비슷하게 되풀이되는 작업이 있습니다. "굳이 사람이 안 해도 되는데"라고 느끼면서도, 자동화할 방법을 찾지 못한 채 시간을 흘려보냅니다.</p>
+            </div></div>
+          </div>
+          <div class="reveal" style="--index:3">
+            <div class="bezel-dark"><div class="bezel-core ctx-card dark">
+              <span class="ctx-tag">Pain 03</span>
+              <h3>AI를 '내 업무'에 연결하지 못한다</h3>
+              <p>AI 도구 이야기는 많이 들어봤지만, 정작 내 일에 어떻게 붙여야 할지 그림이 그려지지 않습니다. 남의 사례가 아니라, 내 업무 데이터로 직접 시작해보는 경험이 필요합니다.</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- #solution -->
+    <section class="section" id="solution" style="background:color-mix(in srgb, var(--ink) 2.5%, transparent);">
+      <div class="container">
+        <div class="section-head reveal" style="--index:0">
+          <span class="eyebrow">설계 · 어떻게 풀었나</span>
+          <h2><span class="accent">'내 업무'</span>를 재정의하는 5시간</h2>
+        </div>
+
+        <div class="goal-grid">
+          <div class="reveal" style="--index:1">
+            <div class="bezel"><div class="bezel-core goal-card">
+              <div class="goal-no">목적 01</div>
+              <h3 class="goal-title">DX 실전 역량 강화</h3>
+              <p>디자인씽킹의 인간 중심 문제 해결 방법론과 생성형 AI를 결합해, 임직원이 스스로 업무 내 비효율을 진단하고 해결 도구를 직접 구현할 수 있도록 합니다.</p>
+            </div></div>
+          </div>
+          <div class="reveal" style="--index:2">
+            <div class="bezel-dark"><div class="bezel-core goal-card dark">
+              <div class="goal-no">목적 02</div>
+              <h3 class="goal-title">혁신 프로세스 내재화</h3>
+              <p>AI 도구 사용법을 익히는 데 그치지 않고, <strong>'문제 정의 → 솔루션 설계 → 프로토타이핑'</strong>으로 이어지는 혁신 사이클을 실제 직무에 적용할 수 있도록 지원합니다.</p>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="part-label reveal" style="--index:3">커리큘럼 — 5시간</div>
+        <div class="part-title reveal" style="--index:3">디자인씽킹 5단계로 완성하는 <span class="accent">업무 리터칭</span></div>
+        <div class="reveal" style="--index:4">
+          <div class="track-steps">
+            <div class="track-step"><div class="num">·</div><div class="desc"><strong>오프닝</strong> · 디자인씽킹 개요 및 AI 도구 안내</div></div>
+            <div class="track-step"><div class="num">1</div><div class="desc"><strong>Step 1. Empathize</strong> · 데일리 업무 패턴과 경험 데이터 정리</div></div>
+            <div class="track-step"><div class="num">2</div><div class="desc"><strong>Step 2. Define</strong> · AI 분석을 통한 업무 내 핵심 비효율 정의</div></div>
+            <div class="track-step"><div class="num">3</div><div class="desc"><strong>Step 3. Ideate</strong> · 문제 해결을 위한 앱 제작 아이디어 구체화</div></div>
+            <div class="track-step"><div class="num">4</div><div class="desc"><strong>Step 4. Prototype</strong> · 노코드 기반 앱 제작 및 전용 도메인 배포</div></div>
+            <div class="track-step"><div class="num">5</div><div class="desc"><strong>Step 5. Test</strong> · 앱 시연, 상호 피드백, 지속 가능한 개선 계획 수립</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- #outcomes -->
+    <section class="section" id="outcomes">
+      <div class="container">
+        <div class="section-head reveal" style="--index:0">
+          <span class="eyebrow">성과 · 무엇이 남았나</span>
+          <h2>오늘의 경험이, <span class="accent">내일의 일하는 방식</span>이 됩니다</h2>
+        </div>
+
+        <div class="outcomes-grid">
+          <div class="reveal" style="--index:1">
+            <div class="bezel-dark"><div class="bezel-core outcome-card first">
+              <div class="check">기대효과 1</div>
+              <h3>데이터 기반 문제 정의 및 AI 솔루션 설계 역량 확보</h3>
+              <p>막연한 업무 불만이 아닌, 실제 <strong>'루틴 데이터'를 분석</strong>해 페인포인트를 도출해봅니다. 병목 지점을 AI 솔루션으로 연결하며, 데이터에 기반한 논리적 의사결정 방식을 익힙니다.</p>
+            </div></div>
+          </div>
+          <div class="reveal" style="--index:2">
+            <div class="bezel"><div class="bezel-core outcome-card">
+              <div class="check">기대효과 2</div>
+              <h3>노코드 기반 앱 구현 및 업무 자동화 기반 구축</h3>
+              <p>개발 지식 없이 <strong>실제 작동하는 앱을 만들고 작동하는 경험</strong>을 해봅니다. 반복 업무 자동화 기반을 다지고, 핵심 가치 중심의 업무 환경을 조성합니다.</p>
+            </div></div>
+          </div>
+          <div class="reveal" style="--index:3">
+            <div class="bezel"><div class="bezel-core outcome-card">
+              <div class="check">기대효과 3</div>
+              <h3>디자인씽킹 기반 혁신 마인드셋 내재화</h3>
+              <p>공감–정의–아이디어–시제품–테스트로 이어지는 <strong>5단계를 경험하며 문제 해결 능력</strong>을 키웁니다. 동료 발표와 상호 피드백을 통해 지속적으로 개선해 나가는 애자일한 업무 태도를 체득합니다.</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- #artifacts -->
+    <section class="section" id="artifacts" style="background:color-mix(in srgb, var(--ink) 2.5%, transparent);">
+      <div class="container">
+        <div class="section-head reveal" style="--index:0">
+          <span class="eyebrow">프로그램 수행 결과</span>
+          <h2><span class="accent">일하는 방식</span>이 달라졌습니다</h2>
+          <p class="lead-after">교육을 통해 도출한 자동화 사례를 직무군별로 정리했습니다.</p>
+        </div>
+
+        <div class="team-grid">
+          <!-- Project 1 -->
+          <div class="reveal" style="--index:1">
+            <div class="bezel"><div class="bezel-core team-card">
+              <div class="team-head">
+                <span class="team-no">Project 1</span>
+                <span class="team-domain">보안 · 컴플라이언스</span>
+              </div>
+              <h3 class="team-title">수탁사 정기 보안점검의 자료 요청·취합·보고서 작성 자동화</h3>
+              <div class="team-block">
+                <div class="team-label">단계별 전환</div>
+                <ul class="team-steps">
+                  <li>① 프로세스 정의</li>
+                  <li>② 동작 녹화·설정</li>
+                  <li>③ 자동화 실행·테스트</li>
+                </ul>
+              </div>
+              <div class="team-block">
+                <div class="team-label">핵심 If-Then 규칙</div>
+                <div class="team-rule"><strong>IF</strong> 수탁사 보안점검 요청을 받으면 <strong>→ THEN</strong> 작년/최근 보안점검 결과물을 확인하고, 유관부서에 증빙자료 제출을 요청한다</div>
+              </div>
+              <div class="team-block">
+                <div class="team-label">기대효과</div>
+                <p class="team-kpi"><strong>데이터 취합·요약 시간 80% 이상 절감</strong> · 수동 작업 데이터 오류 최소화 · 정형화된 보고서 자동 생성으로 업무 흐름 증대</p>
+              </div>
+              <div class="team-meaning">의의 — 보안·컴플라이언스 영역의 정기 업무를 자동화한 도메인 특화 사례.</div>
+            </div></div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="reveal" style="--index:2">
+            <div class="bezel"><div class="bezel-core team-card">
+              <div class="team-head">
+                <span class="team-no">Project 2</span>
+                <span class="team-domain">전략기획팀</span>
+              </div>
+              <h3 class="team-title">기획 보고서의 데이터 수집 → 요약 → 초안 → 검수까지 한 사이클 자동화</h3>
+              <div class="team-block">
+                <div class="team-label">단계별 전환</div>
+                <ul class="team-steps">
+                  <li>① 데이터 수집 자동화 (뉴스·정책·사내 DB 크롤링)</li>
+                  <li>② 핵심 요약 자동 생성 (AI 요약)</li>
+                  <li>③ 보고서 템플릿 생성 (서론·본론·결론)</li>
+                  <li>④ 보고서 템플릿 입력 (PPT/Word/Notion)</li>
+                  <li>⑤ 자동화 실행·피드백 반영</li>
+                </ul>
+              </div>
+              <div class="team-block">
+                <div class="team-label">핵심 If-Then 규칙</div>
+                <div class="team-rule"><strong>IF</strong> 매주 월요일 오전 9시 <strong>→ THEN</strong> 산업 뉴스·정책 브리핑 요약 보고서 자동 생성 <em>(Tool: RPA + ChatGPT)</em></div>
+                <div class="team-rule"><strong>IF</strong> 보고서 자료가 5페이지 이상 작성되면 <strong>→ THEN</strong> AI가 1장 요약본 생성</div>
+              </div>
+              <div class="team-block">
+                <div class="team-label">기대효과</div>
+                <p class="team-kpi"><strong>자료 정리·요약 시간 70~80% 절감</strong> · 최신 동향 반영의 신속성 강화 · 보고서 초안의 일관성·품질 향상 · 인적 검수 최소화로 리드타임 단축</p>
+              </div>
+              <div class="team-meaning">의의 — 단일 도구가 아니라 <strong>여러 도구를 조합한 워크플로</strong>와 <strong>검수 단계까지 명시한 운영 설계</strong>가 가장 정교한 사례.</div>
+            </div></div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="reveal" style="--index:3">
+            <div class="bezel"><div class="bezel-core team-card">
+              <div class="team-head">
+                <span class="team-no">Project 3</span>
+                <span class="team-domain">고객 응대 · 백오피스</span>
+              </div>
+              <h3 class="team-title">고객 민원의 접수·등록·관계자 안내까지의 백오피스 자동화</h3>
+              <div class="team-block">
+                <div class="team-label">단계별 전환</div>
+                <ul class="team-steps">
+                  <li>① 현황 분석·요구사항 정의</li>
+                  <li>② 시스템 연계 설계</li>
+                  <li>③ 데이터 관리·표준화</li>
+                  <li>④ 파일럿·예외 처리 프로세스 구축</li>
+                </ul>
+              </div>
+              <div class="team-block">
+                <div class="team-label">핵심 If-Then 규칙</div>
+                <div class="team-rule"><strong>IF</strong> 카드사 민원이 접수되면 <strong>→ THEN</strong> 자동으로 백오피스에 등록</div>
+                <div class="team-rule"><strong>IF</strong> 백오피스에 등록된 민원건이 발생하면 <strong>→ THEN</strong> 자동으로 가맹점에 메일 발송</div>
+              </div>
+              <div class="team-block">
+                <div class="team-label">기대효과</div>
+                <p class="team-kpi"><strong>업무 효율성 향상</strong> · 고객 응대 품질 제고 · 리스크·컴플라이언스 관리</p>
+              </div>
+              <div class="team-meaning">의의 — 고객 응대 영역의 도메인 특화 자동화 사례.</div>
+            </div></div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="reveal" style="--index:4">
+            <div class="bezel"><div class="bezel-core team-card">
+              <div class="team-head">
+                <span class="team-no">Project 4</span>
+                <span class="team-domain">인사 · HR</span>
+              </div>
+              <h3 class="team-title">객관적 평가 자료를 매핑해 면담안을 자동 생성</h3>
+              <div class="team-block">
+                <div class="team-label">단계별 전환</div>
+                <ul class="team-steps">
+                  <li>① 사용자 인터페이스 구축 (입력 화면)</li>
+                  <li>② 데이터 연동·매핑 (표 항목 연결)</li>
+                  <li>③ 로직 구현·자동화 (결과 자동 보기)</li>
+                </ul>
+              </div>
+              <div class="team-block">
+                <div class="team-label">핵심 If-Then 규칙</div>
+                <div class="team-rule"><strong>IF</strong> 평가 결과가 있다 <strong>→ THEN</strong> 피드백 결과와 매칭하여 면담안을 작성한다</div>
+              </div>
+              <div class="team-block">
+                <div class="team-label">기대효과</div>
+                <p class="team-kpi"><strong>면담 시간 80% 감소</strong> · 피드백 및 성과 데이터를 통한 객관적 평가 기반 마련</p>
+              </div>
+              <div class="team-meaning">의의 — 인사·HR 영역의 정성·정량 결합 자동화 사례.</div>
+            </div></div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="reveal" style="--index:5">
+            <div class="bezel"><div class="bezel-core team-card">
+              <div class="team-head">
+                <span class="team-no">Project 5</span>
+                <span class="team-domain">엔드투엔드 워크플로</span>
+              </div>
+              <h3 class="team-title">9단계 자동화 워크플로 설계</h3>
+              <div class="team-block">
+                <div class="team-label">9단계 워크플로</div>
+                <ul class="team-steps">
+                  <li>① <strong>스케줄 트리거</strong> (Schedule by Zapier — 매일 오전 7시)</li>
+                  <li>② <strong>데이터 수집</strong> (Notion DB 주간 보고서)</li>
+                  <li>③ <strong>데이터 가공</strong> (Formatter — 변동 항목 ±10% 필터)</li>
+                  <li>④ <strong>AI 요약</strong> (OpenAI — 변동 항목별 요약)</li>
+                  <li>⑤ <strong>보고서 생성</strong> (Google Docs/Sheets)</li>
+                  <li>⑥ <strong>이메일 발송</strong> (Gmail — PDF 첨부)</li>
+                  <li>⑦ <strong>오류 핸들링</strong> (Slack 알림)</li>
+                  <li>⑧ <strong>변동 강조·오류 시 알림</strong></li>
+                  <li>⑨ <strong>If-Then 조건부 규칙</strong> (Zapier)</li>
+                </ul>
+              </div>
+              <div class="team-block">
+                <div class="team-label">기대효과</div>
+                <p class="team-kpi"><strong>데이터 취합·요약 시간 80% 이상 절감</strong> · 수동 작업 데이터 오류 최소화 · 정형화된 보고서 자동 생성</p>
+              </div>
+              <div class="team-meaning">의의 — 가장 구체적인 실전 자동화 워크플로. 도구 9개를 잇는 <strong>엔드투엔드 파이프라인</strong>까지 그려낸 사례.</div>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="part-label reveal" style="--index:6">결과물 발췌</div>
+        <div class="part-title reveal" style="--index:6">페르소나 정의에서 업무 자동화 계획서까지</div>
+        <div class="reveal" style="--index:7">
+          <div class="excerpt-grid">
+            <figure class="excerpt-card">
+              <div class="excerpt-step">Step 01 · Empathize</div>
+              <div class="excerpt-img"><img src="assets/dt-result-persona.jpg" alt="페르소나 레쥬메 — 사용자 정의 단계 결과물" loading="lazy"></div>
+              <figcaption>페르소나 레쥬메 — 사용자의 라이프스타일·목표·페인포인트·동기를 한 장으로 정의</figcaption>
+            </figure>
+            <figure class="excerpt-card">
+              <div class="excerpt-step">Step 02 · Observe (1)</div>
+              <div class="excerpt-img"><img src="assets/dt-result-flow.jpg" alt="업무 플로우 — 시간대별 업무 활동·생각·감정·접점 서비스 표" loading="lazy"></div>
+              <figcaption>업무 플로우 — 하루 단위로 활동·생각·감정·도구를 표로 정리</figcaption>
+            </figure>
+            <figure class="excerpt-card">
+              <div class="excerpt-step">Step 02 · Observe (2)</div>
+              <div class="excerpt-img"><img src="assets/dt-result-chart.jpg" alt="업무 플로우 차트 — 시간대별 감정 곡선 그래프" loading="lazy"></div>
+              <figcaption>업무 플로우 차트 — 감정의 고저를 시각화해 핵심 비효율 지점 도출</figcaption>
+            </figure>
+            <figure class="excerpt-card">
+              <div class="excerpt-step">Step 05 · Final</div>
+              <div class="excerpt-img"><img src="assets/dt-result-report.jpg" alt="AI 업무 자동화 계획서 한 장 보고서 — 최종 산출물" loading="lazy"></div>
+              <figcaption>AI 업무 자동화 계획서 초안 작성</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-row">
+        <div class="who">
+          <span>B2B AX workshop</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    const btn = document.getElementById('menuButton');
+    const panel = document.getElementById('mobileMenu');
+    if (btn && panel) {
+      btn.addEventListener('click', () => { const open = panel.classList.toggle('open'); btn.setAttribute('aria-expanded', open); });
+      panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { panel.classList.remove('open'); btn.setAttribute('aria-expanded', false); }));
+    }
+  </script>
+</body>
+</html>
